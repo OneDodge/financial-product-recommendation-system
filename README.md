@@ -9,6 +9,9 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install python 
 pip3 install -r requirements.txt
 ```
 
+## Dataset
+If you want to get hold of the latest data set please visit [WealthML](https://github.com/twinzom/WealthML)
+
 ## Application Configuration
 Before you begin, please update the configuration (./src/main/resources.application.yml)
 ```yaml
