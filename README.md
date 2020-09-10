@@ -35,6 +35,36 @@ python3 ./src/main/python/rs-api.py
 ```
 
 ### User Recommendation API
+#### End Point
+```
+http://127.0.0.1:5000/recommendation/user
+```
+#### Request Parameter
+```
+{
+	"product_name": "U62300",
+	"3year_return": "11.37",
+	"standard_deviation": "20.12",
+	"dividend": "0.22",
+	"asset_class": "Equity Developed Market"
+}
+```
 ![Image of User Recommendation API](api-doc/user_recommendation.png)
+
 ### Product Recommendation API
 ![Image of Product Recommendation API](api-doc/product_recommendation.png)
+#### End Point
+```
+http://127.0.0.1:5000/recommendation/product
+```
+#### Request Parameter
+```
+{
+	"user": "CUST00000134",
+	"age": 20,
+	"gender": "M",
+	"maritalStatus": "SINGLE",
+	"haveChild": "N",
+	"education": "SECONDARY"
+}
+```
