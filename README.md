@@ -40,7 +40,7 @@ python3 ./src/main/python/rs-api.py
 ### User Recommendation API
 #### End Point
 ```
-http://127.0.0.1:5000/recommendation/user
+http://localhost/recommendation/user
 ```
 #### Request Parameter
 ```
@@ -57,7 +57,7 @@ http://127.0.0.1:5000/recommendation/user
 ### Product Recommendation API
 #### End Point
 ```
-http://127.0.0.1:5000/recommendation/product
+http://localhost/recommendation/product
 ```
 #### Request Parameter
 ```
