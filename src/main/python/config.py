@@ -28,7 +28,7 @@ class Config:
 
 
 def main():
-    print(cf['nn']['file']['input'])
+    print(cf)
 
 
 if __name__ == '__main__':
