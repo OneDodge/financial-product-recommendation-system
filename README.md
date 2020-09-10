@@ -52,7 +52,6 @@ http://127.0.0.1:5000/recommendation/user
 ![Image of User Recommendation API](api-doc/user_recommendation.png)
 
 ### Product Recommendation API
-![Image of Product Recommendation API](api-doc/product_recommendation.png)
 #### End Point
 ```
 http://127.0.0.1:5000/recommendation/product
@@ -68,3 +67,4 @@ http://127.0.0.1:5000/recommendation/product
 	"education": "SECONDARY"
 }
 ```
+![Image of Product Recommendation API](api-doc/product_recommendation.png)
