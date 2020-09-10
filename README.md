@@ -13,7 +13,7 @@ pip3 install -r requirements.txt
 If you want to get hold of the latest data set please visit [WealthML](https://github.com/twinzom/WealthML)
 
 ## Application Configuration
-Before you begin, please update the configuration (./src/main/resources.application.yml)
+Before you begin, please update the configuration (./src/main/resources/application.yml)
 ```yaml
 nn:
   file:
