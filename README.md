@@ -11,9 +11,9 @@ pip3 install -r requirements.txt
 ## Usage
 ### Train the neural network
 ```bash
-python3 rs-nn.py
+python3 ./src/main/python/rs-nn.py
 ```
 ### Startup API Server to server API Request
 ```bash
-python3 rs-api.py
+python3 ./src/main/python/rs-api.py
 ```
