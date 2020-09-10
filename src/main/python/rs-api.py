@@ -218,27 +218,31 @@ def userRecommendationApi():
 
     users = np.unique(users)
 
-    modified_users = []
-    for u in users:
-        modified_user_element = []
-        user_df = df[df[USER_INDEX_COLUMN] == u]
+    # print(len(users))
+    users_df = df[df[USER_INDEX_COLUMN].isin(users)]
+    modified_users = users_df[[USER_INDEX_COLUMN, AGE_INDEX_COLUMN, GENDER_INDEX_COLUMN,
+                               MARITAL_STATUS_INDEX_COLUMN, HAVE_CHILD_INDEX_COLUMN, EDUCATION_INDEX_COLUMN]]
+    # print(len(modified_users))
+    # for u in users:
+    #     modified_user_element = []
+    #     user_df = df[df[USER_INDEX_COLUMN] == u]
 
-        modified_user_element.append(
-            user_df[USER_INDEX_COLUMN].to_numpy()[0])
-        modified_user_element.append(
-            user_df[AGE_INDEX_COLUMN].to_numpy()[0])
-        modified_user_element.append(
-            user_df[GENDER_INDEX_COLUMN].to_numpy()[0])
-        modified_user_element.append(
-            user_df[MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
-        modified_user_element.append(
-            user_df[HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
-        modified_user_element.append(
-            user_df[EDUCATION_INDEX_COLUMN].to_numpy()[0])
-        modified_users.append(modified_user_element)
+    #     modified_user_element.append(
+    #         user_df[USER_INDEX_COLUMN].to_numpy()[0])
+    #     modified_user_element.append(
+    #         user_df[AGE_INDEX_COLUMN].to_numpy()[0])
+    #     modified_user_element.append(
+    #         user_df[GENDER_INDEX_COLUMN].to_numpy()[0])
+    #     modified_user_element.append(
+    #         user_df[MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
+    #     modified_user_element.append(
+    #         user_df[HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
+    #     modified_user_element.append(
+    #         user_df[EDUCATION_INDEX_COLUMN].to_numpy()[0])
+    #     modified_users.append(modified_user_element)
 
     products = []
-    for index in modified_users:
+    for index in range(len(modified_users)):
         product_element = []
         product_element.append(desired_product_index)
         product_element.append(desired_3year_return)
