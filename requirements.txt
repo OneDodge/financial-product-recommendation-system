@@ -7,3 +7,4 @@ numpy==1.18.5
 scikit-learn==0.23.2
 absl-py==0.8.1
 pyyaml==5.3.1
+flask-cors==3.0.9

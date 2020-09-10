@@ -1,20 +1,93 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
 </head>
 
 <body>
-    HI
-</body>
+    <!-- <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+        </tbody>
+    </table> -->
 
-<script>
-    d3.csv("./src/main/resources/CUST_INVESTMENT.csv", function (data) {
-        for (var i = 0; i < data.length; i++) {
-            console.log(data[i].Name);
-            console.log(data[i].Age);
-        }
-    });
-</script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script>
+        d3.json("http://localhost:5000/recommendation/data").then(function (data) {
+            // console.log(data[0]);
+
+            function tabulate(data, columns) {
+                var table = d3.select('body').append('table').attr("class", "table table-striped table-sm")
+                var thead = table.append('thead')
+                var tbody = table.append('tbody');
+
+                // append the header row
+                thead.append('tr').attr("scope", "col")
+                    .selectAll('th')
+                    .data(columns).enter()
+                    .append('th')
+                    .text(function (column) { return column; });
+
+                // create a row for each object in the data
+                var rows = tbody.selectAll('tr')
+                    .data(data)
+                    .enter()
+                    .append('tr');
+
+                // create a cell in each row for each column
+                var cells = rows.selectAll('td')
+                    .data(function (row) {
+                        return columns.map(function (column) {
+                            return { column: column, value: row[column] };
+                        });
+                    })
+                    .enter()
+                    .append('td')
+                    .text(function (d) { return d.value; });
+
+                return table;
+            }
+
+            // render the table(s)
+            tabulate(data, ['user', 'age', 'gender', 'marital_status', 'have_child', 'education', 'product_name', '3year_return', 'standard_deviation',
+                'dividend', 'asset_class', 'age_category', 'user_index', 'age_index', 'gender_index', 'education_index', 'have_child_index', 'marital_status_index',
+                'product_index', 'asset_class_index']); // 2 column table
+        });
+    </script>
+</body>
 
 </html>

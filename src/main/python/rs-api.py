@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 from tensorflow.keras import Model
 from tensorflow.keras.models import load_model
 
@@ -10,7 +12,7 @@ from tensorflow.keras.models import load_model
 from config import Config
 
 app = Flask(__name__)
-
+CORS(app)
 
 USER_COLUMN = 'user'
 AGE_COLUMN = 'age'
