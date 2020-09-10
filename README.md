@@ -28,11 +28,11 @@ nn:
 ```
 
 ## Usage
-### Train the neural network
+### 1) Train the neural network
 ```bash
 python3 ./src/main/python/rs-nn.py
 ```
-### Startup API Server to server API Request
+### 2) Startup API Server to serve API Request
 ```bash
 python3 ./src/main/python/rs-api.py
 ```
