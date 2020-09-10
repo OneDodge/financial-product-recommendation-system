@@ -33,3 +33,8 @@ python3 ./src/main/python/rs-nn.py
 ```bash
 python3 ./src/main/python/rs-api.py
 ```
+
+### User Recommendation API
+![Image of User Recommendation API](api-doc/user_recommendation.png)
+### Product Recommendation API
+![Image of Product Recommendation API](api-doc/product_recommendation.png)
