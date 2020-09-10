@@ -18,6 +18,10 @@ import random
 import os
 # import ssl
 
+# custom class
+from config import Config
+
+
 FLAGS = flags.FLAGS
 
 USER_COLUMN = 'user'
@@ -184,7 +188,7 @@ def printDataFrameDistribution(df, product_name):
 
 def main():
     # read file
-    df = pd.read_csv("/Users/frankngai/Desktop/workspace/python/recommendation system/data/CUST_INVESTMENT.csv",
+    df = pd.read_csv(Config.getNNFileInput(),
                      sep=",",
                      names=HEADERS,
                      header=0,
@@ -200,7 +204,7 @@ def main():
                          PRODUCT_STD_DEV_COLUMN: np.float64,
                          PRODUCT_DEVIDEND_COLUMN: np.float64,
                          PRODUCT_ASSET_CLASS_COLUMN: 'str'
-                     })
+    })
 
     age_bins = [0, 18, 38, 58, 78, 98, np.inf]
 
@@ -338,19 +342,16 @@ def main():
         modified_y_train_element.append(1)
         modified_y_train.append(modified_y_train_element)
 
-    checkpoint_path = "/Users/frankngai/Desktop/workspace/python/recommendation system/output/"
-    cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+    cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=Config.getNNCheckpoint(),
                                                      save_weights_only=True,
                                                      verbose=0)
 
     hist = model.fit([np.array(modified_x_train), np.array(modified_y_train)], np.array(labels_train),
                      batch_size=batch_size, epochs=epochs, verbose=verbose, shuffle=True, callbacks=[cp_callback])
 
-    model_path = "/Users/frankngai/Desktop/workspace/python/recommendation system/output/recommendation_system_model.h5"
-    model.save(model_path)
+    model.save(Config.getNNModel())
 
-    data_reference_path = "/Users/frankngai/Desktop/workspace/python/recommendation system/output/data_reference.csv"
-    df.to_csv(data_reference_path, index=False)
+    df.to_csv(Config.getNNFileOutput(), index=False)
 
 
 if __name__ == '__main__':

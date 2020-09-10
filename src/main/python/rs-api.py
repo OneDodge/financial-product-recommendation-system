@@ -5,6 +5,10 @@ import numpy as np
 from flask import Flask, request, jsonify
 from tensorflow.keras import Model
 from tensorflow.keras.models import load_model
+
+# custom class
+from config import Config
+
 app = Flask(__name__)
 
 
@@ -47,12 +51,10 @@ HEADERS = [USER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, HAVE_C
 
 PROBABILITY_COLUMN = 'probability (%)'
 
-model_path = "/Users/frankngai/Desktop/workspace/python/recommendation system/output/recommendation_system_model.h5"
-model = load_model(model_path)
+model = load_model(Config.getNNModel())
 
-data_reference_path = "/Users/frankngai/Desktop/workspace/python/recommendation system/output/data_reference.csv"
 # read file
-df = pd.read_csv(data_reference_path,
+df = pd.read_csv(Config.getNNFileOutput(),
                  sep=",",
                  names=HEADERS,
                  header=0,
@@ -77,7 +79,7 @@ df = pd.read_csv(data_reference_path,
                      MARITAL_STATUS_INDEX_COLUMN: np.int32,
                      PRODUCT_INDEX_COLUMN: np.int32,
                      PRODUCT_ASSET_CLASS_INDEX_COLUMN: np.int32
-                 })
+})
 
 
 @app.route("/recommendation/product")
