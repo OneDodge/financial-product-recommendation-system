@@ -279,5 +279,10 @@ def userRecommendationApi():
     return results_df.to_json(orient="records")
 
 
+@app.route("/recommendation/data")
+def getData():
+    return df.to_json(orient="records")
+
+
 if __name__ == "__main__":
     app.run()

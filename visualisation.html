@@ -1,0 +1,20 @@
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+    HI
+</body>
+
+<script>
+    d3.csv("./src/main/resources/CUST_INVESTMENT.csv", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            console.log(data[i].Name);
+            console.log(data[i].Age);
+        }
+    });
+</script>
+
+</html>
