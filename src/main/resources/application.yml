@@ -1,4 +1,3 @@
-
 nn:
   file:
     input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
