@@ -20,6 +20,7 @@ import os
 
 # custom class
 from config import Config
+import rs_ds as ds
 from rs_ds import DataStore
 
 FLAGS = flags.FLAGS
@@ -138,52 +139,6 @@ def get_train_samples(train_mat, num_negatives):
     return user_input, item_input, labels
 
 # An example of the recommendations for financial products
-
-
-def printDataFrameDistribution(df, product_name):
-    desired_product_name = product_name
-    desired_product_df = df[df[PRODUCT_COLUMN] == desired_product_name]
-    # Print each columns distribution
-    print("-----------General(%s)-------------------------------------" %
-          (product_name))
-    print(desired_product_df)
-    print("-----------Age Distribution(%s)----------------------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [AGE_CATEGORY_COLUMN]).size())
-    print(desired_product_df.groupby(
-        [AGE_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
-    print("-----------Gender Distribution(%s)-------------------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [GENDER_COLUMN, GENDER_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
-    print("-----------Education Distribution(%s)----------------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [EDUCATION_COLUMN, EDUCATION_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
-    print("-----------Have Child Distribution(%s)---------------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [HAVE_CHILD_COLUMN, HAVE_CHILD_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
-    print("-----------Marital Status Distribution(%s)-----------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [MARITAL_STATUS_COLUMN, MARITAL_STATUS_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
-    print("-----------Product Distribution(%s)------------------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [PRODUCT_COLUMN, PRODUCT_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
-    print("-----------Product Asset Class Distribution(%s)------------" %
-          (product_name))
-    print(desired_product_df.groupby(
-        [PRODUCT_ASSET_CLASS_COLUMN, PRODUCT_ASSET_CLASS_INDEX_COLUMN]).size())
-    print("-----------------------------------------------------------")
 
 
 def main():

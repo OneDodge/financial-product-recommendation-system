@@ -10,49 +10,11 @@ from tensorflow.keras.models import load_model
 
 # custom class
 from config import Config
+import rs_ds as ds
 from rs_ds import DataStore
 
 app = Flask(__name__)
 CORS(app)
-
-USER_COLUMN = 'user'
-AGE_COLUMN = 'age'
-GENDER_COLUMN = 'gender'
-MARITAL_STATUS_COLUMN = 'marital_status'
-HAVE_CHILD_COLUMN = 'have_child'
-EDUCATION_COLUMN = 'education'
-
-PRODUCT_COLUMN = 'product_name'
-PRODUCT_3_YR_RETURN_COLUMN = '3year_return'
-PRODUCT_STD_DEV_COLUMN = 'standard_deviation'
-PRODUCT_DEVIDEND_COLUMN = 'dividend'
-PRODUCT_ASSET_CLASS_COLUMN = 'asset_class'
-
-USER_INDEX_COLUMN = 'user_index'
-AGE_CATEGORY_COLUMN = 'age_category'
-AGE_INDEX_COLUMN = 'age_index'
-GENDER_INDEX_COLUMN = 'gender_index'
-MARITAL_STATUS_INDEX_COLUMN = 'marital_status_index'
-HAVE_CHILD_INDEX_COLUMN = 'have_child_index'
-EDUCATION_INDEX_COLUMN = 'education_index'
-
-
-PRODUCT_INDEX_COLUMN = 'product_index'
-PRODUCT_ASSET_CLASS_INDEX_COLUMN = 'asset_class_index'
-
-HEADERS = [USER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, HAVE_CHILD_COLUMN, EDUCATION_COLUMN,
-           PRODUCT_COLUMN, PRODUCT_3_YR_RETURN_COLUMN, PRODUCT_STD_DEV_COLUMN, PRODUCT_DEVIDEND_COLUMN, PRODUCT_ASSET_CLASS_COLUMN,
-           AGE_CATEGORY_COLUMN,
-           USER_INDEX_COLUMN,
-           AGE_INDEX_COLUMN,
-           GENDER_INDEX_COLUMN,
-           EDUCATION_INDEX_COLUMN,
-           HAVE_CHILD_INDEX_COLUMN,
-           MARITAL_STATUS_INDEX_COLUMN,
-           PRODUCT_INDEX_COLUMN,
-           PRODUCT_ASSET_CLASS_INDEX_COLUMN]
-
-PROBABILITY_COLUMN = 'probability (%)'
 
 model = load_model(Config.getNNModel())
 
@@ -73,54 +35,54 @@ def productRecommendationApi():
 
     batch_size = 256
 
-    desired_user_index = df[USER_INDEX_COLUMN].max() + 1 if df[df[USER_COLUMN] == desired_user].empty else df[df[USER_COLUMN] == desired_user][USER_INDEX_COLUMN].to_numpy()[
+    desired_user_index = df[ds.USER_INDEX_COLUMN].max() + 1 if df[df[ds.USER_COLUMN] == desired_user].empty else df[df[ds.USER_COLUMN] == desired_user][ds.USER_INDEX_COLUMN].to_numpy()[
         0]
-    desired_age_index = df[AGE_INDEX_COLUMN].max() + 1 if df[df[AGE_COLUMN]
-                                                             == desired_age].empty else df[df[AGE_COLUMN]
-                                                                                           == desired_age][AGE_INDEX_COLUMN].to_numpy()[0]
-    desired_gender_index = df[GENDER_INDEX_COLUMN].max() + 1 if df[df[GENDER_COLUMN]
-                                                                   == desired_gender].empty else df[df[GENDER_COLUMN]
-                                                                                                    == desired_gender][GENDER_INDEX_COLUMN].to_numpy()[0]
-    desired_marital_status_index = df[MARITAL_STATUS_INDEX_COLUMN].max() + 1 if df[df[MARITAL_STATUS_COLUMN]
-                                                                                   == desired_marital_status].empty else df[df[MARITAL_STATUS_COLUMN]
-                                                                                                                            == desired_marital_status][MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0]
-    desired_have_child_index = df[HAVE_CHILD_INDEX_COLUMN].max() + 1 if df[df[HAVE_CHILD_COLUMN]
-                                                                           == desired_have_child].empty else df[df[HAVE_CHILD_COLUMN]
-                                                                                                                == desired_have_child][HAVE_CHILD_INDEX_COLUMN].to_numpy()[0]
-    desired_education_index = df[EDUCATION_INDEX_COLUMN].max() + 1 if df[df[EDUCATION_COLUMN]
-                                                                         == desired_education].empty else df[df[EDUCATION_COLUMN]
-                                                                                                             == desired_education][EDUCATION_INDEX_COLUMN].to_numpy()[0]
+    desired_age_index = df[ds.AGE_INDEX_COLUMN].max() + 1 if df[df[ds.AGE_COLUMN]
+                                                                == desired_age].empty else df[df[ds.AGE_COLUMN]
+                                                                                              == desired_age][ds.AGE_INDEX_COLUMN].to_numpy()[0]
+    desired_gender_index = df[ds.GENDER_INDEX_COLUMN].max() + 1 if df[df[ds.GENDER_COLUMN]
+                                                                      == desired_gender].empty else df[df[ds.GENDER_COLUMN]
+                                                                                                       == desired_gender][ds.GENDER_INDEX_COLUMN].to_numpy()[0]
+    desired_marital_status_index = df[ds.MARITAL_STATUS_INDEX_COLUMN].max() + 1 if df[df[ds.MARITAL_STATUS_COLUMN]
+                                                                                      == desired_marital_status].empty else df[df[ds.MARITAL_STATUS_COLUMN]
+                                                                                                                               == desired_marital_status][ds.MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0]
+    desired_have_child_index = df[ds.HAVE_CHILD_INDEX_COLUMN].max() + 1 if df[df[ds.HAVE_CHILD_COLUMN]
+                                                                              == desired_have_child].empty else df[df[ds.HAVE_CHILD_COLUMN]
+                                                                                                                   == desired_have_child][ds.HAVE_CHILD_INDEX_COLUMN].to_numpy()[0]
+    desired_education_index = df[ds.EDUCATION_INDEX_COLUMN].max() + 1 if df[df[ds.EDUCATION_COLUMN]
+                                                                            == desired_education].empty else df[df[ds.EDUCATION_COLUMN]
+                                                                                                                == desired_education][ds.EDUCATION_INDEX_COLUMN].to_numpy()[0]
 
     # # if user already process the product remove it from the list
     # # get a view on users processed products
-    products_currently_owned_by_user = df[df[USER_INDEX_COLUMN] ==
-                                          desired_user_index].product_index.to_numpy()
+    products_currently_owned_by_user = df[df[ds.USER_INDEX_COLUMN] ==
+                                          desired_user_index][ds.PRODUCT_INDEX_COLUMN].to_numpy()
 
     # get the products in similar users' portfolios
     products = []
-    # potential_products = df[df[USER_INDEX_COLUMN] != desired_user_index]
+    # potential_products = df[df[ds.USER_INDEX_COLUMN] != desired_user_index]
     # for po in products_currently_owned_by_user:
-    #     potential_products = potential_products[potential_products[PRODUCT_INDEX_COLUMN] != po]
+    #     potential_products = potential_products[potential_products[ds.PRODUCT_INDEX_COLUMN] != po]
     potential_products = df
-    products += list(potential_products[PRODUCT_INDEX_COLUMN])
+    products += list(potential_products[ds.PRODUCT_INDEX_COLUMN])
 
     products = np.unique(products)
 
     modified_products = []
     for p in products:
         modified_product_element = []
-        product_df = df[df[PRODUCT_INDEX_COLUMN] == p]
+        product_df = df[df[ds.PRODUCT_INDEX_COLUMN] == p]
 
         modified_product_element.append(
-            product_df[PRODUCT_INDEX_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_INDEX_COLUMN].to_numpy()[0])
         modified_product_element.append(
-            product_df[PRODUCT_3_YR_RETURN_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_3_YR_RETURN_COLUMN].to_numpy()[0])
         modified_product_element.append(
-            product_df[PRODUCT_STD_DEV_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_STD_DEV_COLUMN].to_numpy()[0])
         modified_product_element.append(
-            product_df[PRODUCT_DEVIDEND_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_DEVIDEND_COLUMN].to_numpy()[0])
         modified_product_element.append(
-            product_df[PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0])
         modified_product_element.append(1)
 
         modified_products.append(modified_product_element)
@@ -148,17 +110,17 @@ def productRecommendationApi():
         results = results.tolist()
 
         results_df = pd.DataFrame(np.nan, index=range(len(results)), columns=[
-            PROBABILITY_COLUMN, PRODUCT_COLUMN])
+            ds.PROBABILITY_COLUMN, ds.PRODUCT_COLUMN])
 
         # loop through and get the probability (of being in the portfolio according to my model), the product name
         for i, prob in enumerate(results):
-            results_df.loc[i] = [100 * prob[0], df[df[PRODUCT_INDEX_COLUMN] == items[i][0]].iloc[0]
-                                 [PRODUCT_COLUMN]]
+            results_df.loc[i] = [100 * prob[0], df[df[ds.PRODUCT_INDEX_COLUMN] == items[i][0]].iloc[0]
+                                 [ds.PRODUCT_COLUMN]]
         results_df = results_df.sort_values(
-            by=[PROBABILITY_COLUMN], ascending=False)
+            by=[ds.PROBABILITY_COLUMN], ascending=False)
     else:
         results_df = pd.DataFrame(np.nan, index=range(0), columns=[
-            PROBABILITY_COLUMN, PRODUCT_COLUMN])
+            ds.PROBABILITY_COLUMN, ds.PRODUCT_COLUMN])
 
     return results_df.to_json(orient="records")
 
@@ -175,48 +137,48 @@ def userRecommendationApi():
 
     batch_size = 256
 
-    desired_product_index = df[PRODUCT_INDEX_COLUMN].max() + 1 if df[df[PRODUCT_COLUMN] == desired_product].empty else df[df[PRODUCT_COLUMN] == desired_product][PRODUCT_INDEX_COLUMN].to_numpy()[
+    desired_product_index = df[ds.PRODUCT_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_COLUMN] == desired_product].empty else df[df[ds.PRODUCT_COLUMN] == desired_product][ds.PRODUCT_INDEX_COLUMN].to_numpy()[
         0]
 
-    desired_asset_class_index = df[PRODUCT_ASSET_CLASS_INDEX_COLUMN].max() + 1 if df[df[PRODUCT_ASSET_CLASS_COLUMN]
-                                                                                     == desired_asset_class].empty else df[df[PRODUCT_ASSET_CLASS_COLUMN]
-                                                                                                                           == desired_asset_class][PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0]
+    desired_asset_class_index = df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
+                                                                                        == desired_asset_class].empty else df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
+                                                                                                                              == desired_asset_class][ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0]
     # # if user already process the product remove it from the list
     # # get a view on users processed products
-    users_currently_owned_by_product = df[df[PRODUCT_INDEX_COLUMN] ==
-                                          desired_product_index][USER_INDEX_COLUMN].to_numpy()
+    users_currently_owned_by_product = df[df[ds.PRODUCT_INDEX_COLUMN] ==
+                                          desired_product_index][ds.USER_INDEX_COLUMN].to_numpy()
 
     # # get the products in similar users' portfolios
     users = []
-    potential_users = df[df[PRODUCT_INDEX_COLUMN] != desired_product_index]
+    potential_users = df[df[ds.PRODUCT_INDEX_COLUMN] != desired_product_index]
     for po in users_currently_owned_by_product:
-        potential_users = potential_users[potential_users[USER_INDEX_COLUMN] != po]
+        potential_users = potential_users[potential_users[ds.USER_INDEX_COLUMN] != po]
     # potential_users = df
-    users += list(potential_users[USER_INDEX_COLUMN])
+    users += list(potential_users[ds.USER_INDEX_COLUMN])
 
     users = np.unique(users)
 
     # print(len(users))
-    users_df = df[df[USER_INDEX_COLUMN].isin(users)]
-    modified_users = users_df[[USER_INDEX_COLUMN, AGE_INDEX_COLUMN, GENDER_INDEX_COLUMN,
-                               MARITAL_STATUS_INDEX_COLUMN, HAVE_CHILD_INDEX_COLUMN, EDUCATION_INDEX_COLUMN]]
+    users_df = df[df[ds.USER_INDEX_COLUMN].isin(users)]
+    modified_users = users_df[[ds.USER_INDEX_COLUMN, ds.AGE_INDEX_COLUMN, ds.GENDER_INDEX_COLUMN,
+                               ds.MARITAL_STATUS_INDEX_COLUMN, ds.HAVE_CHILD_INDEX_COLUMN, ds.EDUCATION_INDEX_COLUMN]]
     # print(len(modified_users))
     # for u in users:
     #     modified_user_element = []
-    #     user_df = df[df[USER_INDEX_COLUMN] == u]
+    #     user_df = df[df[ds.USER_INDEX_COLUMN] == u]
 
     #     modified_user_element.append(
-    #         user_df[USER_INDEX_COLUMN].to_numpy()[0])
+    #         user_df[ds.USER_INDEX_COLUMN].to_numpy()[0])
     #     modified_user_element.append(
-    #         user_df[AGE_INDEX_COLUMN].to_numpy()[0])
+    #         user_df[ds.AGE_INDEX_COLUMN].to_numpy()[0])
     #     modified_user_element.append(
-    #         user_df[GENDER_INDEX_COLUMN].to_numpy()[0])
+    #         user_df[ds.GENDER_INDEX_COLUMN].to_numpy()[0])
     #     modified_user_element.append(
-    #         user_df[MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
+    #         user_df[ds.MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
     #     modified_user_element.append(
-    #         user_df[HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
+    #         user_df[ds.HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
     #     modified_user_element.append(
-    #         user_df[EDUCATION_INDEX_COLUMN].to_numpy()[0])
+    #         user_df[ds.EDUCATION_INDEX_COLUMN].to_numpy()[0])
     #     modified_users.append(modified_user_element)
 
     products = []
@@ -242,17 +204,17 @@ def userRecommendationApi():
         results = results.tolist()
 
         results_df = pd.DataFrame(np.nan, index=range(len(results)), columns=[
-            PROBABILITY_COLUMN, USER_COLUMN])
+            ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
 
         # loop through and get the probability (of being in the portfolio according to my model), the product name
         for i, prob in enumerate(results):
-            results_df.loc[i] = [100 * prob[0], df[df[USER_INDEX_COLUMN] == users[i][0]].iloc[0]
-                                 [USER_COLUMN]]
+            results_df.loc[i] = [100 * prob[0], df[df[ds.USER_INDEX_COLUMN] == users[i][0]].iloc[0]
+                                 [ds.USER_COLUMN]]
             results_df = results_df.sort_values(
-                by=[PROBABILITY_COLUMN], ascending=False)
+                by=[ds.PROBABILITY_COLUMN], ascending=False)
     else:
         results_df = pd.DataFrame(np.nan, index=range(0), columns=[
-            PROBABILITY_COLUMN, USER_COLUMN])
+            ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
 
     return results_df.to_json(orient="records")
 
