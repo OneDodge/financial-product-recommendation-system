@@ -28,6 +28,9 @@ FLAGS = flags.FLAGS
 tf.config.threading.set_inter_op_parallelism_threads(12)
 tf.config.threading.set_intra_op_parallelism_threads(12)
 
+strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
+print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
+
 
 def get_model(num_users, num_items, latent_dim=8, dense_layers=[64, 32, 16, 8],
               reg_layers=[0, 0, 0, 0], reg_mf=0):
@@ -174,10 +177,12 @@ def main():
     # # # print('Done loading data!')
 
     # # contstruct the NeuMF Neural Network
-    model = get_model(num_users+1, (num_items*3)+1, latent_dim,
-                      dense_layers, reg_layers, reg_mf)
-    model.compile(optimizer=Adam(lr=learning_rate),
-                  loss=BinaryCrossentropy(from_logits=True), metrics=['accuracy'])
+    with strategy.scope():
+        model = get_model(num_users+1, (num_items*3)+1, latent_dim,
+                          dense_layers, reg_layers, reg_mf)
+
+        model.compile(optimizer=Adam(lr=learning_rate),
+                      loss=BinaryCrossentropy(from_logits=True), metrics=['accuracy'])
     print(model.summary())
 
     user_input_train, item_input_train, labels_train = get_train_samples(
