@@ -18,13 +18,13 @@ Before you begin, please update the configuration (./src/main/resources/applicat
 nn:
   file:
     #This is the File for processing
-    input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
+    input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
     #This is the post process file
-    output: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/data_reference.csv
+    output: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/data_reference.csv
   #This is the check point object of the neural network (weight only)
-  checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/
+  checkpoint: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/
   #This is the complete model of the neural network
-  model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/recommendation_system_model.h5
+  model: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/recommendation_system_model.h5
 ```
 ## Data Visualisation Configuration
 Before you begin, please update the data visualisaton configuration (./visualisation.html) <br/>
