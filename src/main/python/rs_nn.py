@@ -25,36 +25,6 @@ from rs_ds import DataStore
 
 FLAGS = flags.FLAGS
 
-USER_COLUMN = 'user'
-AGE_COLUMN = 'age'
-GENDER_COLUMN = 'gender'
-MARITAL_STATUS_COLUMN = 'marital_status'
-HAVE_CHILD_COLUMN = 'have_child'
-EDUCATION_COLUMN = 'education'
-
-PRODUCT_COLUMN = 'product_name'
-PRODUCT_3_YR_RETURN_COLUMN = '3year_return'
-PRODUCT_STD_DEV_COLUMN = 'standard_deviation'
-PRODUCT_DEVIDEND_COLUMN = 'dividend'
-PRODUCT_ASSET_CLASS_COLUMN = 'asset_class'
-
-USER_INDEX_COLUMN = 'user_index'
-AGE_CATEGORY_COLUMN = 'age_category'
-AGE_INDEX_COLUMN = 'age_index'
-GENDER_INDEX_COLUMN = 'gender_index'
-MARITAL_STATUS_INDEX_COLUMN = 'marital_status_index'
-HAVE_CHILD_INDEX_COLUMN = 'have_child_index'
-EDUCATION_INDEX_COLUMN = 'education_index'
-
-
-PRODUCT_INDEX_COLUMN = 'product_index'
-PRODUCT_ASSET_CLASS_INDEX_COLUMN = 'asset_class_index'
-
-HEADERS = [USER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, HAVE_CHILD_COLUMN, EDUCATION_COLUMN,
-           PRODUCT_COLUMN, PRODUCT_3_YR_RETURN_COLUMN, PRODUCT_STD_DEV_COLUMN, PRODUCT_DEVIDEND_COLUMN, PRODUCT_ASSET_CLASS_COLUMN]
-
-PROBABILITY_COLUMN = 'probability (%)'
-
 tf.config.threading.set_inter_op_parallelism_threads(12)
 tf.config.threading.set_intra_op_parallelism_threads(12)
 
@@ -149,62 +119,28 @@ def main():
 
     age_names = ['<18', '18-38', '38-58', '58-78', '78-98', '98+']
 
-    df[AGE_CATEGORY_COLUMN] = pd.cut(
-        df[AGE_COLUMN], age_bins, labels=age_names)
+    df[ds.AGE_CATEGORY_COLUMN] = pd.cut(
+        df[ds.AGE_COLUMN], age_bins, labels=age_names)
 
     # turn users and products into their unique cat codes so have a 0-N index for users and products
-    df[USER_INDEX_COLUMN] = df[USER_COLUMN].astype('category').cat.codes
-    df[AGE_INDEX_COLUMN] = df[AGE_CATEGORY_COLUMN].astype(
+    df[ds.USER_INDEX_COLUMN] = df[ds.USER_COLUMN].astype('category').cat.codes
+    df[ds.AGE_INDEX_COLUMN] = df[ds.AGE_CATEGORY_COLUMN].astype(
         'category').cat.codes
-    df[GENDER_INDEX_COLUMN] = df[GENDER_COLUMN].astype(
+    df[ds.GENDER_INDEX_COLUMN] = df[ds.GENDER_COLUMN].astype(
         'category').cat.codes
-    df[EDUCATION_INDEX_COLUMN] = df[EDUCATION_COLUMN].astype(
+    df[ds.EDUCATION_INDEX_COLUMN] = df[ds.EDUCATION_COLUMN].astype(
         'category').cat.codes
-    df[HAVE_CHILD_INDEX_COLUMN] = df[HAVE_CHILD_COLUMN].astype(
+    df[ds.HAVE_CHILD_INDEX_COLUMN] = df[ds.HAVE_CHILD_COLUMN].astype(
         'category').cat.codes
-    df[MARITAL_STATUS_INDEX_COLUMN] = df[MARITAL_STATUS_COLUMN].astype(
+    df[ds.MARITAL_STATUS_INDEX_COLUMN] = df[ds.MARITAL_STATUS_COLUMN].astype(
         'category').cat.codes
-    df[PRODUCT_INDEX_COLUMN] = df[PRODUCT_COLUMN].astype(
+    df[ds.PRODUCT_INDEX_COLUMN] = df[ds.PRODUCT_COLUMN].astype(
         'category').cat.codes
-    df[PRODUCT_ASSET_CLASS_INDEX_COLUMN] = df[PRODUCT_ASSET_CLASS_COLUMN].astype(
+    df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN] = df[ds.PRODUCT_ASSET_CLASS_COLUMN].astype(
         'category').cat.codes
 
-    # Print each columns distribution
-    print("-----------General------------")
-    print(df)
-    print("-----------Age Distribution------------")
-    print(df.groupby(
-        [AGE_CATEGORY_COLUMN]).size())
-    print(df.groupby(
-        [AGE_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-    print("-----------Gender Distribution------------")
-    print(df.groupby(
-        [GENDER_COLUMN, GENDER_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-    print("-----------Education Distribution----------")
-    print(df.groupby(
-        [EDUCATION_COLUMN, EDUCATION_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-    print("-----------Have Child Distribution---------")
-    print(df.groupby(
-        [HAVE_CHILD_COLUMN, HAVE_CHILD_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-    print("-----------Marital Status Distribution-----")
-    print(df.groupby(
-        [MARITAL_STATUS_COLUMN, MARITAL_STATUS_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-    print("-----------Product Distribution------------")
-    print(df.groupby(
-        [PRODUCT_COLUMN, PRODUCT_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-    print("-----------Product Asset Class Distribution------------")
-    print(df.groupby(
-        [PRODUCT_ASSET_CLASS_COLUMN, PRODUCT_ASSET_CLASS_INDEX_COLUMN]).size())
-    print("-------------------------------------------")
-
-    x_train = df[USER_INDEX_COLUMN]
-    y_train = df[PRODUCT_INDEX_COLUMN]
+    x_train = df[ds.USER_INDEX_COLUMN]
+    y_train = df[ds.PRODUCT_INDEX_COLUMN]
 
     # save data in dok matrix(optimized sparse matrix object)
     # create a sparse portfolio x products matrix
@@ -250,34 +186,34 @@ def main():
     # organise training input<User,Product><Label>
     modified_x_train = []
     for ui in user_input_train:
-        user_df = df[df[USER_INDEX_COLUMN] == ui]
+        user_df = df[df[ds.USER_INDEX_COLUMN] == ui]
         modified_x_train_element = []
         modified_x_train_element.append(ui)
         modified_x_train_element.append(
-            user_df[AGE_INDEX_COLUMN].to_numpy()[0])
+            user_df[ds.AGE_INDEX_COLUMN].to_numpy()[0])
         modified_x_train_element.append(
-            user_df[GENDER_INDEX_COLUMN].to_numpy()[0])
+            user_df[ds.GENDER_INDEX_COLUMN].to_numpy()[0])
         modified_x_train_element.append(
-            user_df[MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
+            user_df[ds.MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
         modified_x_train_element.append(
-            user_df[HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
+            user_df[ds.HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
         modified_x_train_element.append(
-            user_df[EDUCATION_INDEX_COLUMN].to_numpy()[0])
+            user_df[ds.EDUCATION_INDEX_COLUMN].to_numpy()[0])
         modified_x_train.append(modified_x_train_element)
 
     modified_y_train = []
     for ii in item_input_train:
-        product_df = df[df[PRODUCT_INDEX_COLUMN] == ii]
+        product_df = df[df[ds.PRODUCT_INDEX_COLUMN] == ii]
         modified_y_train_element = []
         modified_y_train_element.append(ii)
         modified_y_train_element.append(
-            product_df[PRODUCT_3_YR_RETURN_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_3_YR_RETURN_COLUMN].to_numpy()[0])
         modified_y_train_element.append(
-            product_df[PRODUCT_STD_DEV_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_STD_DEV_COLUMN].to_numpy()[0])
         modified_y_train_element.append(
-            product_df[PRODUCT_DEVIDEND_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_DEVIDEND_COLUMN].to_numpy()[0])
         modified_y_train_element.append(
-            product_df[PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0])
+            product_df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0])
         modified_y_train_element.append(1)
         modified_y_train.append(modified_y_train_element)
 
