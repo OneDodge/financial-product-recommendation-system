@@ -43,7 +43,7 @@ python3 ./src/main/python/rs_api.py
 ```
 
 ### User Recommendation API
-#### End Point
+#### End Point (Default)
 ```
 http://127.0.0.1:5000/recommendation/user
 ```
@@ -60,7 +60,7 @@ http://127.0.0.1:5000/recommendation/user
 ![Image of User Recommendation API](api-doc/user_recommendation.png)
 
 ### Product Recommendation API
-#### End Point
+#### End Point (Default)
 ```
 http://127.0.0.1:5000/recommendation/product
 ```
