@@ -30,11 +30,11 @@ nn:
 ## Usage
 ### 1) Train the neural network
 ```bash
-python3 ./src/main/python/rs-nn.py
+python3 ./src/main/python/rs_nn.py
 ```
 ### 2) Startup API Server to serve API Request
 ```bash
-python3 ./src/main/python/rs-api.py
+python3 ./src/main/python/rs_api.py
 ```
 
 ### User Recommendation API
