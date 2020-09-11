@@ -1,6 +1,6 @@
 nn:
   file:
-    input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
-    output: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/data_reference.csv
-  checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/
-  model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/recommendation_system_model.h5
+    input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
+    output: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/data_reference.csv
+  checkpoint: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/
+  model: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/recommendation_system_model.h5
