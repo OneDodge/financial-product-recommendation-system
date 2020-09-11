@@ -27,7 +27,7 @@ nn:
   model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/recommendation_system_model.h5
 ```
 ## Data Visualisation Configuration
-Before you begin, please update the data visualisaton configuration (./visualisation.html)
+Before you begin, please update the data visualisaton configuration (./visualisation.html) <br/>
 If you are using default endpoint then you do not need to update this config
 ```
 line 47: url = "http://localhost:5000/recommendation/data"
