@@ -283,7 +283,12 @@ def userRecommendationApi():
 
 @app.route("/recommendation/data")
 def getData():
-    return df.to_json(orient="records")
+    result_df = df
+    for k in request.values:
+        val = int(request.values.get(k)) if request.values.get(
+            k).isnumeric() else request.values.get(k)
+        result_df = result_df[result_df[k] == val]
+    return result_df.to_json(orient="records")
 
 
 if __name__ == "__main__":
