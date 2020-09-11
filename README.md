@@ -72,5 +72,36 @@ http://127.0.0.1:5000/recommendation/product
 ```
 ![Image of Product Recommendation API](api-doc/product_recommendation.png)
 
+### Product Recommendation API
+#### End Point
+```
+http://localhost:5000/recommendation/data
+```
+#### Request Parameter
+```
+http://localhost:5000/recommendation/data?age=20
+http://localhost:5000/recommendation/data?user=CUST00000134
+http://localhost:5000/recommendation/data?age=20
+http://localhost:5000/recommendation/data?gender=M
+http://localhost:5000/recommendation/data?marital_status=SINGLE
+http://localhost:5000/recommendation/data?have_child=N
+http://localhost:5000/recommendation/data?education=SECONDARY
+http://localhost:5000/recommendation/data?product_name=U62300
+http://localhost:5000/recommendation/data?3year_return=11.37
+http://localhost:5000/recommendation/data?standard_deviation=20.12
+http://localhost:5000/recommendation/data?dividend=0.22
+http://localhost:5000/recommendation/data?asset_class=Equity Developed Market
+http://localhost:5000/recommendation/data?age_category=18-38"
+http://localhost:5000/recommendation/data?user_index=131
+http://localhost:5000/recommendation/data?age_index=1
+http://localhost:5000/recommendation/data?gender_index=1
+http://localhost:5000/recommendation/data?education_index=2
+http://localhost:5000/recommendation/data?have_child_index=0
+http://localhost:5000/recommendation/data?marital_status_index=2
+http://localhost:5000/recommendation/data?product_index=3
+http://localhost:5000/recommendation/data?asset_class_index=0
+```
+![Image of Recommendation Data API](api-doc/recommendation_data.png)
+
 ### Data Visualisation Tool
 ![Image of Data Visualisation Tool](api-doc/visualisation.png)
