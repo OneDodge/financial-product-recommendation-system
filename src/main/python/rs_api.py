@@ -34,7 +34,7 @@ def productRecommendationApi():
     desired_education = content["education"]
 
     batch_size = 256
-
+    # 2.47 ms
     desired_user_index = df[ds.USER_INDEX_COLUMN].max() + 1 if df[df[ds.USER_COLUMN] == desired_user].empty else df[df[ds.USER_COLUMN] == desired_user][ds.USER_INDEX_COLUMN].to_numpy()[
         0]
     desired_age_index = df[ds.AGE_INDEX_COLUMN].max() + 1 if df[df[ds.AGE_COLUMN]
@@ -52,7 +52,7 @@ def productRecommendationApi():
     desired_education_index = df[ds.EDUCATION_INDEX_COLUMN].max() + 1 if df[df[ds.EDUCATION_COLUMN]
                                                                             == desired_education].empty else df[df[ds.EDUCATION_COLUMN]
                                                                                                                 == desired_education][ds.EDUCATION_INDEX_COLUMN].to_numpy()[0]
-
+    # 17.2 ms
     # # if user already process the product remove it from the list
     # # get a view on users processed products
     products_currently_owned_by_user = df[df[ds.USER_INDEX_COLUMN] ==
@@ -101,12 +101,14 @@ def productRecommendationApi():
     users = np.array(users)
     items = np.array(modified_products)
 
+    # 22.1 ms
     print('\nRanking most likely products using the NeuMF model...')
 
     # and predict products for my user
     if len(products) > 0:
         results = model.predict(
             [users, items], batch_size=batch_size, verbose=0)
+        # 207 ms
         results = results.tolist()
 
         results_df = pd.DataFrame(np.nan, index=range(len(results)), columns=[
@@ -123,6 +125,7 @@ def productRecommendationApi():
             ds.PROBABILITY_COLUMN, ds.PRODUCT_COLUMN])
 
     return results_df.to_json(orient="records")
+    # 209 ms
 
 
 @app.route("/recommendation/user")
@@ -137,49 +140,23 @@ def userRecommendationApi():
 
     batch_size = 256
 
+    # 1.82 ms
+
     desired_product_index = df[ds.PRODUCT_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_COLUMN] == desired_product].empty else df[df[ds.PRODUCT_COLUMN] == desired_product][ds.PRODUCT_INDEX_COLUMN].to_numpy()[
         0]
 
     desired_asset_class_index = df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
                                                                                         == desired_asset_class].empty else df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
                                                                                                                               == desired_asset_class][ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0]
-    # # if user already process the product remove it from the list
-    # # get a view on users processed products
+
     users_currently_owned_by_product = df[df[ds.PRODUCT_INDEX_COLUMN] ==
                                           desired_product_index][ds.USER_INDEX_COLUMN].to_numpy()
 
-    # # get the products in similar users' portfolios
-    users = []
-    potential_users = df[df[ds.PRODUCT_INDEX_COLUMN] != desired_product_index]
-    for po in users_currently_owned_by_product:
-        potential_users = potential_users[potential_users[ds.USER_INDEX_COLUMN] != po]
-    # potential_users = df
-    users += list(potential_users[ds.USER_INDEX_COLUMN])
+    users_df = df[~df[ds.USER_INDEX_COLUMN].isin(
+        users_currently_owned_by_product)]
 
-    users = np.unique(users)
-
-    # print(len(users))
-    users_df = df[df[ds.USER_INDEX_COLUMN].isin(users)]
     modified_users = users_df[[ds.USER_INDEX_COLUMN, ds.AGE_INDEX_COLUMN, ds.GENDER_INDEX_COLUMN,
                                ds.MARITAL_STATUS_INDEX_COLUMN, ds.HAVE_CHILD_INDEX_COLUMN, ds.EDUCATION_INDEX_COLUMN]]
-    # print(len(modified_users))
-    # for u in users:
-    #     modified_user_element = []
-    #     user_df = df[df[ds.USER_INDEX_COLUMN] == u]
-
-    #     modified_user_element.append(
-    #         user_df[ds.USER_INDEX_COLUMN].to_numpy()[0])
-    #     modified_user_element.append(
-    #         user_df[ds.AGE_INDEX_COLUMN].to_numpy()[0])
-    #     modified_user_element.append(
-    #         user_df[ds.GENDER_INDEX_COLUMN].to_numpy()[0])
-    #     modified_user_element.append(
-    #         user_df[ds.MARITAL_STATUS_INDEX_COLUMN].to_numpy()[0])
-    #     modified_user_element.append(
-    #         user_df[ds.HAVE_CHILD_INDEX_COLUMN].to_numpy()[0])
-    #     modified_user_element.append(
-    #         user_df[ds.EDUCATION_INDEX_COLUMN].to_numpy()[0])
-    #     modified_users.append(modified_user_element)
 
     products = []
     for index in range(len(modified_users)):
@@ -195,6 +172,7 @@ def userRecommendationApi():
     users = np.array(modified_users)
     items = np.array(products)
 
+    # 12.4 ms
     print('\nRanking most likely products using the NeuMF model...')
 
     # and predict products for my user
@@ -217,6 +195,7 @@ def userRecommendationApi():
             ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
 
     return results_df.to_json(orient="records")
+    return "1"
 
 
 @app.route("/recommendation/data")
