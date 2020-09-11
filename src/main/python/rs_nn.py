@@ -113,7 +113,7 @@ def get_train_samples(train_mat, num_negatives):
 
 def main():
     # read file
-    df = df = DataStore.getNNFileInput()
+    df = DataStore.getNNFileInput()
 
     age_bins = [0, 18, 38, 58, 78, 98, np.inf]
 
