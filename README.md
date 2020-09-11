@@ -72,7 +72,7 @@ http://127.0.0.1:5000/recommendation/product
 ```
 ![Image of Product Recommendation API](api-doc/product_recommendation.png)
 
-### Product Recommendation API
+### Recommendation Data API
 #### End Point
 ```
 http://localhost:5000/recommendation/data
