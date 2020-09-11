@@ -16,8 +16,7 @@ from rs_ds import DataStore
 app = Flask(__name__)
 CORS(app)
 
-model = load_model(Config.getNNModel())
-model.compile()
+model = load_model(Config.getNNModel(), compile=False)
 
 # read file
 df = DataStore.getNNFileOutput()
