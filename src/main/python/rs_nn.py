@@ -20,7 +20,7 @@ import os
 
 # custom class
 from config import Config
-
+from rs_ds import DataStore
 
 FLAGS = flags.FLAGS
 
@@ -188,23 +188,7 @@ def printDataFrameDistribution(df, product_name):
 
 def main():
     # read file
-    df = pd.read_csv(Config.getNNFileInput(),
-                     sep=",",
-                     names=HEADERS,
-                     header=0,
-                     dtype={
-                         USER_COLUMN: 'str',
-                         AGE_COLUMN: np.int32,
-                         GENDER_COLUMN: 'str',
-                         MARITAL_STATUS_COLUMN: 'str',
-                         HAVE_CHILD_COLUMN: 'str',
-                         EDUCATION_COLUMN: 'str',
-                         PRODUCT_COLUMN: 'str',
-                         PRODUCT_3_YR_RETURN_COLUMN: np.float64,
-                         PRODUCT_STD_DEV_COLUMN: np.float64,
-                         PRODUCT_DEVIDEND_COLUMN: np.float64,
-                         PRODUCT_ASSET_CLASS_COLUMN: 'str'
-    })
+    df = df = DataStore.getNNFileInput()
 
     age_bins = [0, 18, 38, 58, 78, 98, np.inf]
 

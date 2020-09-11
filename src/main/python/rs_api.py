@@ -10,6 +10,7 @@ from tensorflow.keras.models import load_model
 
 # custom class
 from config import Config
+from rs_ds import DataStore
 
 app = Flask(__name__)
 CORS(app)
@@ -56,32 +57,7 @@ PROBABILITY_COLUMN = 'probability (%)'
 model = load_model(Config.getNNModel())
 
 # read file
-df = pd.read_csv(Config.getNNFileOutput(),
-                 sep=",",
-                 names=HEADERS,
-                 header=0,
-                 dtype={
-                     USER_COLUMN: 'str',
-                     AGE_COLUMN: np.int32,
-                     GENDER_COLUMN: 'str',
-                     MARITAL_STATUS_COLUMN: 'str',
-                     HAVE_CHILD_COLUMN: 'str',
-                     EDUCATION_COLUMN: 'str',
-                     PRODUCT_COLUMN: 'str',
-                     PRODUCT_3_YR_RETURN_COLUMN: np.float64,
-                     PRODUCT_STD_DEV_COLUMN: np.float64,
-                     PRODUCT_DEVIDEND_COLUMN: np.float64,
-                     PRODUCT_ASSET_CLASS_COLUMN: 'str',
-                     AGE_CATEGORY_COLUMN: 'str',
-                     USER_INDEX_COLUMN: np.int32,
-                     AGE_INDEX_COLUMN: np.int32,
-                     GENDER_INDEX_COLUMN: np.int32,
-                     EDUCATION_INDEX_COLUMN: np.int32,
-                     HAVE_CHILD_INDEX_COLUMN: np.int32,
-                     MARITAL_STATUS_INDEX_COLUMN: np.int32,
-                     PRODUCT_INDEX_COLUMN: np.int32,
-                     PRODUCT_ASSET_CLASS_INDEX_COLUMN: np.int32
-})
+df = DataStore.getNNFileOutput()
 
 
 @app.route("/recommendation/product")
