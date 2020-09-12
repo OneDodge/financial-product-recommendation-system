@@ -111,3 +111,6 @@ http://localhost:5000/recommendation/data?asset_class_index=0
 
 ### Data Visualisation Tool
 ![Image of Data Visualisation Tool](api-doc/visualisation.png)
+
+### Production Architecture Diagram
+![Image of Data Visualisation Tool](api-doc/architecture.png)
