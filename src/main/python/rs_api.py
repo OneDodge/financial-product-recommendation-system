@@ -195,7 +195,6 @@ def userRecommendationApi():
             ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
 
     return results_df.to_json(orient="records")
-    return "1"
 
 
 @app.route("/recommendation/data")
