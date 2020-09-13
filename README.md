@@ -85,7 +85,6 @@ http://localhost:5000/recommendation/data
 ```
 #### Request Parameter
 ```
-http://localhost:5000/recommendation/data?age=20
 http://localhost:5000/recommendation/data?user=CUST00000134
 http://localhost:5000/recommendation/data?age=20
 http://localhost:5000/recommendation/data?gender=M
