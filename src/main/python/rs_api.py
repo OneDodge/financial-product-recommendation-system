@@ -22,7 +22,7 @@ model = load_model(Config.getNNModel(), compile=False)
 df = DataStore.getNNFileOutput()
 
 
-@app.route("/recommendation/product")
+@app.route("/recommendation/product", methods=['GET', 'POST'])
 def productRecommendationApi():
     content = request.json
 
@@ -128,7 +128,7 @@ def productRecommendationApi():
     # 209 ms
 
 
-@app.route("/recommendation/user")
+@app.route("/recommendation/user", methods=['GET', 'POST'])
 def userRecommendationApi():
     content = request.json
 
