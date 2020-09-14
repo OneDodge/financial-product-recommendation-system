@@ -118,9 +118,13 @@ def main():
     # read file
     df = DataStore.getNNFileInput()
 
-    age_bins = [0, 18, 38, 58, 78, 98, np.inf]
+    # age_bins = [0, 18, 38, 58, 78, 98, np.inf]
 
-    age_names = ['<18', '18-38', '38-58', '58-78', '78-98', '98+']
+    # age_names = ['<18', '18-38', '38-58', '58-78', '78-98', '98+']
+
+    age_bins = [0, 18, 30, 44, 54, 90, np.inf]
+
+    age_names = ['<18', '18-30', '30-44', '44-54', '54-90', '90+']
 
     df[ds.AGE_CATEGORY_COLUMN] = pd.cut(
         df[ds.AGE_COLUMN], age_bins, labels=age_names)
