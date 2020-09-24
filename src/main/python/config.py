@@ -15,16 +15,20 @@ class Config:
         return cf['nn']['file']['input']
 
     @staticmethod
-    def getNNFileOutput():
-        return cf['nn']['file']['output']
+    def getNNIndex():
+        return cf['nn']['file']['output']['index']
 
     @staticmethod
     def getNNCheckpoint():
-        return cf['nn']['checkpoint']
+        return cf['nn']['file']['output']['checkpoint']
 
     @staticmethod
     def getNNModel():
-        return cf['nn']['model']
+        return cf['nn']['file']['output']['model']
+
+    @staticmethod
+    def get():
+        return cf
 
 
 def main():
