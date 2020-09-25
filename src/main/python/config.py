@@ -15,10 +15,6 @@ class Config:
         return cf['nn']['file']['input']
 
     @staticmethod
-    def getNNIndex():
-        return cf['nn']['file']['output']['index']
-
-    @staticmethod
     def getNNCheckpoint():
         return cf['nn']['file']['output']['checkpoint']
 
