@@ -189,6 +189,7 @@ def main():
     # read file
     df = DataStore.getNNFileInput()
 
+    # create user product matrix
     df[ds.USER_INDEX_COLUMN] = df[ds.USER_COLUMN].astype('category').cat.codes
     df[ds.PRODUCT_INDEX_COLUMN] = df[ds.PRODUCT_COLUMN].astype(
         'category').cat.codes
@@ -202,9 +203,12 @@ def main():
         y_train.unique())), dtype=np.float32)
     for userIndex, productIndex in zip(x_train, y_train):
         mat_train[userIndex, productIndex] = 1
+
+    # generate negative sampling
     user_input_train, item_input_train, labels_train = get_train_samples(
         mat_train, num_negatives)
 
+    # flatten user product matrix in to table
     new_table = []
     for i in range(len(user_input_train)):
         user_df = df[df[ds.USER_INDEX_COLUMN] == user_input_train[i]]
@@ -234,6 +238,7 @@ def main():
     df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.HAVE_CHILD_COLUMN, ds.EDUCATION_COLUMN,
                   ds.PRODUCT_3_YR_RETURN_COLUMN, ds.PRODUCT_STD_DEV_COLUMN, ds.PRODUCT_DEVIDEND_COLUMN, ds.PRODUCT_ASSET_CLASS_COLUMN, TARGET]
 
+    # Re cast numbers from string
     df[ds.AGE_COLUMN] = df[ds.AGE_COLUMN].astype(str).astype(int)
     df[ds.PRODUCT_3_YR_RETURN_COLUMN] = df[ds.PRODUCT_3_YR_RETURN_COLUMN].astype(
         str).astype(float)
@@ -243,6 +248,7 @@ def main():
         str).astype(float)
     df[TARGET] = df[TARGET].astype(str).astype(int)
 
+    # split train, validate, test data set
     train, test = train_test_split(df, test_size=0.2)
     train, val = train_test_split(train, test_size=0.2)
     print(len(train), 'train examples')
@@ -258,11 +264,11 @@ def main():
     all_inputs = []
     encoded_features = []
 
-    batch_size = 256
     train_ds = df_to_dataset(train, batch_size=batch_size)
     val_ds = df_to_dataset(val, shuffle=False, batch_size=batch_size)
     test_ds = df_to_dataset(test, shuffle=False, batch_size=batch_size)
 
+    # start building features layers
     # Users
     for header in [ds.AGE_COLUMN]:
         numeric_col = tf.keras.Input(shape=(1,), name=header)
@@ -309,6 +315,7 @@ def main():
         all_inputs.append(categorical_col)
         encoded_features.append(encoded_categorical_col)
 
+    # build model with feature layers as input
     all_user_features = tf.keras.layers.concatenate(user_encoded_features)
     all_product_features = tf.keras.layers.concatenate(
         product_encoded_features)
