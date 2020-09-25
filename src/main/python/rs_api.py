@@ -126,7 +126,7 @@ def userRecommendationApi():
         result_table[i] = result_item
     result_table = np.array(result_table)
     result_df = pd.DataFrame(data=result_table)
-    result_df.columns = [ds.PRODUCT_COLUMN, ds.PROBABILITY_COLUMN]
+    result_df.columns = [ds.USER_COLUMN, ds.PROBABILITY_COLUMN]
     result_df = result_df.sort_values(
         by=[ds.PROBABILITY_COLUMN], ascending=False)
     return result_df.to_json(orient="records")
