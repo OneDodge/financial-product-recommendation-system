@@ -69,10 +69,13 @@ def productRecommendationApi():
         predictions = model.predict(input_dict)
 
         result_item = result_table[i]
-        result_item.append(predictions * 100)
+        result_item.append(predictions[0][0] * 100)
         result_table[i] = result_item
     result_table = np.array(result_table)
     result_df = pd.DataFrame(data=result_table)
+    result_df.columns = [ds.PRODUCT_COLUMN, ds.PROBABILITY_COLUMN]
+    result_df = result_df.sort_values(
+        by=[ds.PROBABILITY_COLUMN], ascending=False)
     return result_df.to_json(orient="records")
 
 
@@ -119,10 +122,13 @@ def userRecommendationApi():
         predictions = model.predict(input_dict)
 
         result_item = result_table[i]
-        result_item.append(predictions * 100)
+        result_item.append(predictions[0][0] * 100)
         result_table[i] = result_item
     result_table = np.array(result_table)
     result_df = pd.DataFrame(data=result_table)
+    result_df.columns = [ds.PRODUCT_COLUMN, ds.PROBABILITY_COLUMN]
+    result_df = result_df.sort_values(
+        by=[ds.PROBABILITY_COLUMN], ascending=False)
     return result_df.to_json(orient="records")
 
 
