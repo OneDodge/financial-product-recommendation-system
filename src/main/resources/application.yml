@@ -1,6 +1,14 @@
 nn:
-  file:
-    input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
-    output:
-      checkpoint: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
-      model: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
+  product:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+  pre-processing:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_stock.txt
+      output: Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+  processing:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
+      output:
+        checkpoint: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
+        model: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/

@@ -11,8 +11,24 @@ with open(CONFIG_PATH) as file:
 
 class Config:
     @staticmethod
-    def getNNFileInput():
-        return cf['nn']['file']['input']
+    def getNNProductFileInput():
+        return cf['nn']['product']['file']['input']
+
+    @staticmethod
+    def getNNPreProcessingFileInput():
+        return cf['nn']['pre-processing']['file']['input']
+
+    @staticmethod
+    def getNNPreProcessingFileOutput():
+        return cf['nn']['pre-processing']['file']['output']
+
+    @staticmethod
+    def getNNProcessingFileInput():
+        return cf['nn']['processing']['file']['input']
+
+    @staticmethod
+    def getNNProcessingFileOutput():
+        return cf['nn']['processing']['file']['output']
 
     @staticmethod
     def getNNCheckpoint():
