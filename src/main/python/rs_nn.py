@@ -36,68 +36,6 @@ strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
 print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
 
 
-def get_model(all_user_features, all_product_features, num_users, num_items, latent_dim=8, dense_layers=[64, 32, 16, 8],
-              reg_layers=[0, 0, 0, 0], reg_mf=0):
-
-    # input layer
-    # input_user = Input(shape=(5,), dtype='float64', name='user_input')
-    # input_item = Input(shape=(5,), dtype='float64', name='item_input')
-
-    # embedding layer
-    mf_user_embedding = Embedding(input_dim=num_users, output_dim=latent_dim,
-                                  name='mf_user_embedding',
-                                  embeddings_initializer='glorot_uniform',
-                                  embeddings_regularizer=l2(reg_mf),
-                                  input_length=1)
-    mf_item_embedding = Embedding(input_dim=num_items, output_dim=latent_dim,
-                                  name='mf_item_embedding',
-                                  embeddings_initializer='glorot_uniform',
-                                  embeddings_regularizer=l2(reg_mf),
-                                  input_length=1)
-    mlp_user_embedding = Embedding(input_dim=num_users, output_dim=int(dense_layers[0]/2),
-                                   name='mlp_user_embedding',
-                                   embeddings_initializer='glorot_uniform',
-                                   embeddings_regularizer=l2(reg_layers[0]),
-                                   input_length=1)
-    mlp_item_embedding = Embedding(input_dim=num_items, output_dim=int(dense_layers[0]/2),
-                                   name='mlp_item_embedding',
-                                   embeddings_initializer='glorot_uniform',
-                                   embeddings_regularizer=l2(reg_layers[0]),
-                                   input_length=1)
-
-    # MF latent vector
-    # mf_user_latent = Flatten()(mf_user_embedding(user_feature_layer_outputs))
-    # mf_item_latent = Flatten()(mf_item_embedding(product_feature_layer_outputs))
-    # mf_cat_latent = Multiply()([mf_user_latent, mf_item_latent])
-
-    # MLP latent vector
-    mlp_user_latent = Flatten()(mlp_user_embedding(all_user_features))
-    mlp_item_latent = Flatten()(mlp_item_embedding(all_product_features))
-    mlp_cat_latent = Concatenate()([mlp_user_latent, mlp_item_latent])
-
-    mlp_vector = mlp_cat_latent
-
-    # build dense layer for model
-    for i in range(1, len(dense_layers)):
-        layer = Dense(dense_layers[i],
-                      activity_regularizer=l2(reg_layers[i]),
-                      activation='relu',
-                      name='layer%d' % i)
-        mlp_vector = layer(mlp_vector)
-
-    # predict_layer = Concatenate()([mf_cat_latent, mlp_vector])
-    # result = Dense(1, activation='softmax',
-    #                kernel_initializer='lecun_uniform', name='result')
-    result = Dense(1, activation='sigmoid',
-                   kernel_initializer='lecun_uniform', name='result')
-
-    model = Model(inputs=[all_user_features, all_product_features],
-                  outputs=result(mlp_vector))
-    return model
-
-# get the training samples
-
-
 def get_category_encoding_layer(name, dataset, dtype, max_tokens=None):
     # Create a StringLookup layer which will turn strings into integer indices
     if dtype == 'string':

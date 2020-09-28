@@ -13,7 +13,7 @@ nn:
       output: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
   processing:
     file:
-      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
       output:
         checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
         model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/

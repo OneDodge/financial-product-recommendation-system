@@ -62,6 +62,12 @@ for offset in range(0, 2300, 100):
         statistics_resp.encoding = 'utf-8'
         statistics_selector = etree.HTML(statistics_resp.text)
 
+        trailing_p_e = None
+        revenue = None
+        total_cash = None
+        total_debt = None
+        five_year_average_dividend_yield = None
+
         try:
             trailing_p_e = statistics_selector.xpath(
                 '//*[@id="Col1-0-KeyStatistics-Proxy"]/section/div[3]/div[1]/div[2]/div/div[1]/div[1]/table/tbody/tr[3]/td[2]//text()')[0]
@@ -97,6 +103,9 @@ for offset in range(0, 2300, 100):
         profile_resp = requests.get(profile)
         profile_resp.encoding = 'utf-8'
         profile_selector = etree.HTML(profile_resp.text)
+
+        sector = None
+        industry = None
 
         try:
             sector = profile_selector.xpath(
