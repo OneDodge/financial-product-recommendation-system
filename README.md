@@ -16,14 +16,25 @@ If you want to get hold of the latest data set please visit [WealthML](https://g
 Before you begin, please update the configuration (./src/main/resources/application.yml)
 ```yaml
 nn:
-  file:
-    #This is the File for processing
-    input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
-    output:
-      #This is the check point object of the neural network (weight only)
-      checkpoint: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
-      #This is the complete model of the neural network
-      model: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
+  product:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+  pre-processing:
+    customer:
+      file:
+        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_stock.txt
+    product:
+      file:
+        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+    file:
+      output: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+  processing:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+      output:
+        checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
+        model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
+
 ```
 ## Data Visualisation Configuration
 Before you begin, please update the data visualisaton configuration (./visualisation.html) <br/>
