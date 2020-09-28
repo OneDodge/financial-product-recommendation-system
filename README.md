@@ -76,12 +76,15 @@ http://127.0.0.1:5000/recommendation/product
 #### Request Parameter
 ```
 {
-	"user": "CUST00000134",
-	"age": 20,
-	"gender": "M",
-	"maritalStatus": "SINGLE",
-	"haveChild": "N",
-	"education": "SECONDARY"
+	"customer": "A",
+	"age": "78",
+	"gender": "F",
+	"marital": "M",
+	"edu_level": "S",
+	"num_of_child": "0",
+	"risk_level": "1",
+	"total_tcr": "1.0",
+	"salary": "0.0"
 }
 ```
 ![Image of Product Recommendation API](api-doc/product_recommendation.png)
