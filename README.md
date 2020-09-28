@@ -18,22 +18,22 @@ Before you begin, please update the configuration (./src/main/resources/applicat
 nn:
   product:
     file:
-      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+      input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
   pre-processing:
     customer:
       file:
-        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_stock.txt
+        input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_stock.txt
     product:
       file:
-        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+        input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
     file:
-      output: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+      output: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
   processing:
     file:
-      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+      input: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
       output:
-        checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
-        model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
+        checkpoint: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
+        model: /Users/xxx/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
 
 ```
 ## Data Visualisation Configuration
