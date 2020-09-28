@@ -99,9 +99,3 @@ http://127.0.0.1:5000/recommendation/product
 }
 ```
 ![Image of Product Recommendation API](api-doc/product_recommendation.png)
-
-### Data Visualisation Tool
-![Image of Data Visualisation Tool](api-doc/visualisation.png)
-
-### Production Architecture Diagram
-![Image of Data Visualisation Tool](api-doc/architecture.png)
