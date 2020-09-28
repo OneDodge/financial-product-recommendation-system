@@ -26,72 +26,125 @@ model = load_model(Config.getNNModel())
 df = DataStore.getNNFileInput()
 
 
-# @app.route("/recommendation/product", methods=['GET', 'POST'])
-# def productRecommendationApi():
-#     content = request.json
+@app.route("/recommendation/product", methods=['GET', 'POST'])
+def productRecommendationApi():
+    content = request.json
 
-#     desired_user = content["user"]
-#     desired_age = int(content["age"])
-#     desired_gender = content["gender"]
-#     desired_marital_status = content["maritalStatus"]
-#     desired_have_child = content["haveChild"]
-#     desired_education = content["education"]
+    desired_user = content["customer"]
+    desired_age = int(content["age"])
+    desired_gender = content["gender"]
+    desired_marital = content["marital"]
+    desired_edu_level = content["edu_level"]
+    desired_num_of_child = int(content["num_of_child"])
+    desired_risk_level = int(content["risk_level"])
+    desired_total_tcr = float(content["total_tcr"])
+    desired_salary = float(content["salary"])
 
-#     new_table = []
-#     result_table = []
-#     for product_name in df[ds.PRODUCT_COLUMN].unique():
-#         product_df = df[df[ds.PRODUCT_COLUMN] == product_name].iloc[[0]]
+    new_table = []
+    result_table = []
+    for symbol in df[ds.SYMBOL_COLUMN].unique():
+        product_df = df[df[ds.SYMBOL_COLUMN] == symbol].iloc[[0]]
 
-#         new_row = []
-#         new_row.append(desired_age)
-#         new_row.append(desired_gender)
-#         new_row.append(desired_marital_status)
-#         new_row.append(desired_have_child)
-#         new_row.append(desired_education)
-#         new_row.append(product_df[ds.PRODUCT_3_YR_RETURN_COLUMN].to_numpy()[
-#             0])
-#         new_row.append(product_df[ds.PRODUCT_STD_DEV_COLUMN].to_numpy()[
-#             0])
-#         new_row.append(product_df[ds.PRODUCT_DEVIDEND_COLUMN].to_numpy()[
-#             0])
-#         new_row.append(product_df[ds.PRODUCT_ASSET_CLASS_COLUMN].to_numpy()[
-#             0])
+        new_row = []
+        new_row.append(desired_age)
+        new_row.append(desired_gender)
+        new_row.append(desired_marital)
+        new_row.append(desired_edu_level)
+        new_row.append(desired_num_of_child)
+        new_row.append(desired_risk_level)
+        new_row.append(desired_total_tcr)
+        new_row.append(desired_salary)
 
-#         new_table.append(new_row)
-#         result_item = []
-#         result_item.append(product_df[ds.PRODUCT_COLUMN].to_numpy()[
-#             0])
-#         result_table.append(result_item)
+        new_row.append(product_df[ds.PRICE_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.CHANGE_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.CHANGE_PERCENTAGE_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.MARKET_CAPTIAL_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.VOLUME_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[
+            0])
+        new_row.append(product_df[ds.SECTOR_COLUMN].to_numpy()[
+            0])
+        new_row.append(product_df[ds.INDUSTRY_COLUMN].to_numpy()[
+            0])
 
-#     new_table_df = pd.DataFrame(data=np.array(new_table))
-#     new_table_df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.HAVE_CHILD_COLUMN, ds.EDUCATION_COLUMN,
-#                             ds.PRODUCT_3_YR_RETURN_COLUMN, ds.PRODUCT_STD_DEV_COLUMN, ds.PRODUCT_DEVIDEND_COLUMN, ds.PRODUCT_ASSET_CLASS_COLUMN]
+        new_table.append(new_row)
+        result_item = []
+        result_item.append(product_df[ds.SYMBOL_COLUMN].to_numpy()[
+            0])
+        result_table.append(result_item)
 
-#     new_table_df[ds.AGE_COLUMN] = new_table_df[ds.AGE_COLUMN].astype(
-#         str).astype(int)
-#     new_table_df[ds.PRODUCT_3_YR_RETURN_COLUMN] = new_table_df[ds.PRODUCT_3_YR_RETURN_COLUMN].astype(
-#         str).astype(float)
-#     new_table_df[ds.PRODUCT_STD_DEV_COLUMN] = new_table_df[ds.PRODUCT_STD_DEV_COLUMN].astype(
-#         str).astype(float)
-#     new_table_df[ds.PRODUCT_DEVIDEND_COLUMN] = new_table_df[ds.PRODUCT_DEVIDEND_COLUMN].astype(
-#         str).astype(float)
+    new_table_df = pd.DataFrame(data=np.array(new_table))
+    new_table_df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NUMBER_OF_CHILD_COLUMN,
+                            ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN,
+                            ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
+                            ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
+                            ds.TRAILING_P_E_COLUMN, ds.REVENUE_COLUMN, ds.VOLUME_COLUMN, ds.TOTAL_CASH_COLUMN, ds.TOTAL_DEBT_COLUMN,
+                            ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN]
 
-#     input_dict = {col: tf.convert_to_tensor(
-#         new_table_df[col].to_numpy()) for col in new_table_df.columns}
+    new_table_df[ds.AGE_COLUMN] = new_table_df[ds.AGE_COLUMN].astype(
+        str).astype(int)
+    new_table_df[ds.NUMBER_OF_CHILD_COLUMN] = new_table_df[ds.NUMBER_OF_CHILD_COLUMN].astype(
+        str).astype(int)
+    new_table_df[ds.RISK_LEVEL_COLUMN] = new_table_df[ds.RISK_LEVEL_COLUMN].astype(
+        str).astype(int)
+    new_table_df[ds.TOTAL_TCR_COLUMN] = new_table_df[ds.TOTAL_TCR_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.SALARY_COLUMN] = new_table_df[ds.SALARY_COLUMN].astype(
+        str).astype(float)
 
-#     predictions = model.predict(input_dict)
+    new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
+        str).astype(float)
 
-#     print(len(predictions))
-#     for i in range(len(predictions)):
-#         result_item = result_table[i]
-#         result_item.append(predictions[i][0] * 100)
-#         result_table[i] = result_item
-#     result_table = np.array(result_table)
-#     result_df = pd.DataFrame(data=result_table)
-#     result_df.columns = [ds.PRODUCT_COLUMN, ds.PROBABILITY_COLUMN]
-#     result_df = result_df.sort_values(
-#         by=[ds.PROBABILITY_COLUMN], ascending=False)
-#     return result_df.to_json(orient="records")
+    new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.CHANGE_COLUMN] = new_table_df[ds.CHANGE_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.CHANGE_PERCENTAGE_COLUMN] = new_table_df[ds.CHANGE_PERCENTAGE_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.MARKET_CAPTIAL_COLUMN] = new_table_df[ds.MARKET_CAPTIAL_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.REVENUE_COLUMN] = new_table_df[ds.REVENUE_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.VOLUME_COLUMN] = new_table_df[ds.VOLUME_COLUMN].astype(
+        str).astype(float)
+
+    new_table_df[ds.TOTAL_CASH_COLUMN] = new_table_df[ds.TOTAL_CASH_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.TOTAL_DEBT_COLUMN] = new_table_df[ds.TOTAL_DEBT_COLUMN].astype(
+        str).astype(float)
+    new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
+        str).astype(float)
+
+    input_dict = {col: tf.convert_to_tensor(
+        new_table_df[col].to_numpy()) for col in new_table_df.columns}
+
+    predictions = model.predict(input_dict)
+
+    print(len(predictions))
+    for i in range(len(predictions)):
+        result_item = result_table[i]
+        result_item.append(predictions[i][0] * 100)
+        result_table[i] = result_item
+    result_table = np.array(result_table)
+    result_df = pd.DataFrame(data=result_table)
+    result_df.columns = [ds.SYMBOL_COLUMN, ds.PROBABILITY_COLUMN]
+    result_df = result_df.sort_values(
+        by=[ds.PROBABILITY_COLUMN], ascending=False)
+    return result_df.to_json(orient="records")
 
 
 @app.route("/recommendation/user", methods=['GET', 'POST'])
