@@ -32,11 +32,11 @@ class Config:
 
     @staticmethod
     def getNNCheckpoint():
-        return cf['nn']['file']['output']['checkpoint']
+        return cf['nn']['processing']['file']['output']['checkpoint']
 
     @staticmethod
     def getNNModel():
-        return cf['nn']['file']['output']['model']
+        return cf['nn']['processing']['file']['output']['model']
 
     @staticmethod
     def get():
