@@ -178,6 +178,8 @@ def main():
 
     pre_processing_file_df.to_csv(
         Config.getNNPreProcessingFileOutput(), index=False)
+    product_file_df.to_csv(
+        Config.getNNPreProcessingFileOutput() + ".product", index=False)
 
 
 if __name__ == '__main__':
