@@ -1,3 +1,4 @@
+from config import Config
 import requests
 from lxml import etree
 import time
@@ -5,8 +6,21 @@ import random
 import pandas as pd
 import numpy as np
 
+
+def KMBT2Number(s):
+    if s.find('K') > -1:
+        return float(s.split('K')[0]) * 1000
+    elif s.find('M') > -1:
+        return float(s.split('M')[0]) * 1000000
+    elif s.find('B') > -1:
+        return float(s.split('B')[0]) * 1000000000000
+    elif s.find('T') > -1:
+        return float(s.split('T')[0]) * 1000000000000000000
+    else:
+        return s
+
+
 # custom class
-from config import Config
 
 result = []
 
@@ -17,9 +31,10 @@ for offset in range(0, 2300, 100):
     print(complete_list)
     complete_list_resp.encoding = 'utf-8'
     complete_list_selector = etree.HTML(complete_list_resp.text)
+    print(complete_list_selector.xpath(
+        '//*[@id="fin-scr-res-table"]/div[1]/div[1]/span[2]/span//text()')[0])
     number_of_items = int(complete_list_selector.xpath(
         '//*[@id="fin-scr-res-table"]/div[1]/div[1]/span[2]/span//text()')[0].split(' ')[0].split('-')[1]) % 100
-
     number_of_items = 100 if number_of_items == 0 else number_of_items
     print(number_of_items)
     for index in range(1, number_of_items + 1):
@@ -100,13 +115,13 @@ for offset in range(0, 2300, 100):
         result_item.append(name)
         result_item.append(price)
         result_item.append(change)
-        result_item.append(change_percentage)
-        result_item.append(market_cap)
+        result_item.append(change_percentage.split("%")[0])
+        result_item.append(KMBT2Number(market_cap))
         result_item.append(trailing_p_e)
         result_item.append(revenue)
-        result_item.append(volume)
-        result_item.append(total_cash)
-        result_item.append(total_debt)
+        result_item.append(KMBT2Number(volume))
+        result_item.append(KMBT2Number(total_cash))
+        result_item.append(KMBT2Number(total_debt))
         result_item.append(five_year_average_dividend_yield)
         result_item.append(sector)
         result_item.append(industry)

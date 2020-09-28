@@ -15,8 +15,12 @@ class Config:
         return cf['nn']['product']['file']['input']
 
     @staticmethod
-    def getNNPreProcessingFileInput():
-        return cf['nn']['pre-processing']['file']['input']
+    def getNNPreProcessingCustomerFileInput():
+        return cf['nn']['pre-processing']['customer']['file']['input']
+
+    @staticmethod
+    def getNNPreProcessingProductFileInput():
+        return cf['nn']['pre-processing']['product']['file']['input']
 
     @staticmethod
     def getNNPreProcessingFileOutput():
