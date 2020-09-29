@@ -31,6 +31,10 @@ class Config:
         return cf['nn']['processing']['file']['input']
 
     @staticmethod
+    def getNNPostProcessingFileInput():
+        return cf['nn']['post-processing']['file']['input']
+
+    @staticmethod
     def getNNCheckpoint():
         return cf['nn']['processing']['file']['output']['checkpoint']
 

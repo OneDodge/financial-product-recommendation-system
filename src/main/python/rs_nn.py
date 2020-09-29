@@ -257,7 +257,7 @@ def main():
 
     model.save(Config.getNNModel())
 
-    # df.to_csv(Config.getNNFileOutput(), index=False)
+    df.to_csv(Config.getNNPostProcessingFileInput(), index=False)
 
 
 if __name__ == '__main__':

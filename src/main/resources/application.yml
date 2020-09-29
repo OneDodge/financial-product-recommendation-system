@@ -17,3 +17,6 @@ nn:
       output:
         checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
         model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
+  post-processing:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/post-processed.csv
