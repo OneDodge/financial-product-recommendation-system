@@ -13,6 +13,10 @@ from config import Config
 import rs_ds as ds
 from rs_ds import DataStore
 
+tf.config.threading.set_inter_op_parallelism_threads(12)
+tf.config.threading.set_intra_op_parallelism_threads(12)
+tf.keras.backend.set_floatx('float64')
+
 app = Flask(__name__)
 CORS(app)
 
