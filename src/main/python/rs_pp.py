@@ -159,8 +159,8 @@ def main():
     pre_processing_file_df[MARKET_CAPTIAL_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
         lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][MARKET_CAPTIAL_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[TRAILING_P_E_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TRAILING_P_E_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[TRAILING_P_E_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TRAILING_P_E_COLUMN].to_numpy()[0])
 
     # pre_processing_file_df[REVENUE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
     #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][REVENUE_COLUMN].to_numpy()[0])
