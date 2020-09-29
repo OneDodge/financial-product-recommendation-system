@@ -19,7 +19,7 @@ CORS(app)
 model = load_model(Config.getNNModel(), compile=False)
 
 # read file
-df = DataStore.getNNFileOutput()
+df = DataStore.getNNPostProcessingFileInput()
 
 
 @app.route("/recommendation/product", methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def productRecommendationApi():
 
     batch_size = 256
     # 2.47 ms
-    desired_user_index = df[ds.USER_INDEX_COLUMN].max() + 1 if df[df[ds.USER_COLUMN] == desired_user].empty else df[df[ds.USER_COLUMN] == desired_user][ds.USER_INDEX_COLUMN].to_numpy()[
+    desired_user_index = df['user_index'].max() + 1 if df[df[ds.USER_COLUMN] == desired_user].empty else df[df[ds.USER_COLUMN] == desired_user]['user_index'].to_numpy()[
         0]
     desired_age_index = df['age_index'].max() + 1 if df[df[ds.AGE_COLUMN]
                                                         == desired_age].empty else df[df[ds.AGE_COLUMN]
@@ -72,20 +72,22 @@ def productRecommendationApi():
     modified_products = []
     for p in products:
         modified_product_element = []
-        product_df = df[df[ds.PRODUCT_INDEX_COLUMN] == p]
+        product_df = df[df['symbol_index'] == p]
 
         modified_product_element.append(
-            product_df[ds.PRODUCT_INDEX_COLUMN].to_numpy()[0])
+            product_df['symbol_index'].to_numpy()[0])
         modified_product_element.append(
-            product_df[ds.PRODUCT_3_YR_RETURN_COLUMN].to_numpy()[0])
+            product_df[ds.PRICE_COLUMN].to_numpy()[0])
         modified_product_element.append(
-            product_df[ds.PRODUCT_STD_DEV_COLUMN].to_numpy()[0])
+            product_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[0])
         modified_product_element.append(
-            product_df[ds.PRODUCT_DEVIDEND_COLUMN].to_numpy()[0])
+            product_df['sector_index'].to_numpy()[0])
         modified_product_element.append(
-            product_df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0])
+            product_df['industry_index'].to_numpy()[0])
         modified_product_element.append(1)
-
+        modified_product_element.append(1)
+        modified_product_element.append(1)
+        modified_product_element.append(1)
         modified_products.append(modified_product_element)
 
     users = []
@@ -98,6 +100,8 @@ def productRecommendationApi():
         user_element.append(desired_education_index)
         user_element.append(desired_num_of_child)
         user_element.append(desired_risk_level)
+        user_element.append(1)
+        user_element.append(1)
         users.append(user_element)
 
     users = np.array(users)
@@ -130,107 +134,96 @@ def productRecommendationApi():
     # 209 ms
 
 
-@app.route("/recommendation/user", methods=['GET', 'POST'])
-def userRecommendationApi():
-    content = request.json
+# @app.route("/recommendation/user", methods=['GET', 'POST'])
+# def userRecommendationApi():
+#     content = request.json
 
-    desired_symbol = content["symbol"]
-    desired_name = content["name"]
-    desired_price = float(content["price"])
-    desired_change = float(content["change"])
-    desired_change_percentage = float(content["change_percentage"])
-    desired_market_capital = float(content["market_captial"])
-    desired_trailing_p_e = float(content["trailing_p_e"])
-    try:
-        desired_revenue = float(content["revenue"])
-    except:
-        desired_revenue = float("nan")
+#     desired_symbol = content["symbol"]
+#     desired_name = content["name"]
+#     desired_price = float(content["price"])
+#     desired_change = float(content["change"])
+#     desired_change_percentage = float(content["change_percentage"])
+#     desired_market_capital = float(content["market_captial"])
+#     desired_trailing_p_e = float(content["trailing_p_e"])
+#     try:
+#         desired_revenue = float(content["revenue"])
+#     except:
+#         desired_revenue = float("nan")
 
-    desired_volume = float(content["volume"])
+#     desired_volume = float(content["volume"])
 
-    try:
-        desired_total_cash = float(content["total_cash"])
-    except:
-        desired_total_cash = float("nan")
+#     try:
+#         desired_total_cash = float(content["total_cash"])
+#     except:
+#         desired_total_cash = float("nan")
 
-    try:
-        desired_total_debt = float(content["total_debt"])
-    except:
-        desired_total_debt = float("nan")
+#     try:
+#         desired_total_debt = float(content["total_debt"])
+#     except:
+#         desired_total_debt = float("nan")
 
-    desired_5_year_average_dividend_yield = float(
-        content["5_year_average_dividend_yield"])
-    desired_sector = content["sector"]
-    desired_industry = content["industry"]
+#     desired_5_year_average_dividend_yield = float(
+#         content["5_year_average_dividend_yield"])
+#     desired_sector = content["sector"]
+#     desired_industry = content["industry"]
 
-    batch_size = 256
+#     batch_size = 256
 
-    # 1.82 ms
+#     # 1.82 ms
 
-    desired_product_index = df[ds.PRODUCT_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_COLUMN] == desired_product].empty else df[df[ds.PRODUCT_COLUMN] == desired_product][ds.PRODUCT_INDEX_COLUMN].to_numpy()[
-        0]
+#     desired_product_index = df[ds.PRODUCT_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_COLUMN] == desired_product].empty else df[df[ds.PRODUCT_COLUMN] == desired_product][ds.PRODUCT_INDEX_COLUMN].to_numpy()[
+#         0]
 
-    desired_asset_class_index = df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
-                                                                                        == desired_asset_class].empty else df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
-                                                                                                                              == desired_asset_class][ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0]
+#     desired_asset_class_index = df[ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].max() + 1 if df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
+#                                                                                         == desired_asset_class].empty else df[df[ds.PRODUCT_ASSET_CLASS_COLUMN]
+#                                                                                                                               == desired_asset_class][ds.PRODUCT_ASSET_CLASS_INDEX_COLUMN].to_numpy()[0]
 
-    users_currently_owned_by_product = df[df[ds.PRODUCT_INDEX_COLUMN] ==
-                                          desired_product_index][ds.USER_INDEX_COLUMN].to_numpy()
+#     users_currently_owned_by_product = df[df[ds.PRODUCT_INDEX_COLUMN] ==
+#                                           desired_product_index][ds.USER_INDEX_COLUMN].to_numpy()
 
-    users_df = df[~df[ds.USER_INDEX_COLUMN].isin(
-        users_currently_owned_by_product)]
+#     users_df = df[~df[ds.USER_INDEX_COLUMN].isin(
+#         users_currently_owned_by_product)]
 
-    modified_users = users_df[[ds.USER_INDEX_COLUMN, ds.AGE_INDEX_COLUMN, ds.GENDER_INDEX_COLUMN,
-                               ds.MARITAL_STATUS_INDEX_COLUMN, ds.HAVE_CHILD_INDEX_COLUMN, ds.EDUCATION_INDEX_COLUMN]]
+#     modified_users = users_df[[ds.USER_INDEX_COLUMN, ds.AGE_INDEX_COLUMN, ds.GENDER_INDEX_COLUMN,
+#                                ds.MARITAL_STATUS_INDEX_COLUMN, ds.HAVE_CHILD_INDEX_COLUMN, ds.EDUCATION_INDEX_COLUMN]]
 
-    products = []
-    for index in range(len(modified_users)):
-        product_element = []
-        product_element.append(desired_product_index)
-        product_element.append(desired_3year_return)
-        product_element.append(desired_standard_deviation)
-        product_element.append(desired_dividend)
-        product_element.append(desired_asset_class_index)
-        product_element.append(1)
-        products.append(product_element)
+#     products = []
+#     for index in range(len(modified_users)):
+#         product_element = []
+#         product_element.append(desired_product_index)
+#         product_element.append(desired_3year_return)
+#         product_element.append(desired_standard_deviation)
+#         product_element.append(desired_dividend)
+#         product_element.append(desired_asset_class_index)
+#         product_element.append(1)
+#         products.append(product_element)
 
-    users = np.array(modified_users)
-    items = np.array(products)
+#     users = np.array(modified_users)
+#     items = np.array(products)
 
-    # 12.4 ms
-    print('\nRanking most likely products using the NeuMF model...')
+#     # 12.4 ms
+#     print('\nRanking most likely products using the NeuMF model...')
 
-    # and predict products for my user
-    if len(users) > 0:
-        results = model.predict(
-            [users, items], batch_size=batch_size, verbose=0)
-        results = results.tolist()
+#     # and predict products for my user
+#     if len(users) > 0:
+#         results = model.predict(
+#             [users, items], batch_size=batch_size, verbose=0)
+#         results = results.tolist()
 
-        results_df = pd.DataFrame(np.nan, index=range(len(results)), columns=[
-            ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
+#         results_df = pd.DataFrame(np.nan, index=range(len(results)), columns=[
+#             ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
 
-        # loop through and get the probability (of being in the portfolio according to my model), the product name
-        for i, prob in enumerate(results):
-            results_df.loc[i] = [100 * prob[0], df[df[ds.USER_INDEX_COLUMN] == users[i][0]].iloc[0]
-                                 [ds.USER_COLUMN]]
-            results_df = results_df.sort_values(
-                by=[ds.PROBABILITY_COLUMN], ascending=False)
-    else:
-        results_df = pd.DataFrame(np.nan, index=range(0), columns=[
-            ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
+#         # loop through and get the probability (of being in the portfolio according to my model), the product name
+#         for i, prob in enumerate(results):
+#             results_df.loc[i] = [100 * prob[0], df[df[ds.USER_INDEX_COLUMN] == users[i][0]].iloc[0]
+#                                  [ds.USER_COLUMN]]
+#             results_df = results_df.sort_values(
+#                 by=[ds.PROBABILITY_COLUMN], ascending=False)
+#     else:
+#         results_df = pd.DataFrame(np.nan, index=range(0), columns=[
+#             ds.PROBABILITY_COLUMN, ds.USER_COLUMN])
 
-    return results_df.to_json(orient="records")
-
-
-@app.route("/recommendation/data")
-def getData():
-    result_df = df
-    for k in request.values:
-        val = int(request.values.get(k)) if request.values.get(
-            k).isnumeric() else request.values.get(k)
-        result_df = result_df[result_df[k] == val]
-    return result_df.to_json(orient="records")
-
+#     return results_df.to_json(orient="records")
 
 if __name__ == "__main__":
     app.run()

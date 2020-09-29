@@ -45,6 +45,25 @@ IN_HEADERS = [USER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, EDU
               #   TOTAL_DEBT_COLUMN,
               FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, SECTOR_COLUMN, INDUSTRY_COLUMN]
 
+OUT_HEADERS = [USER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, EDUCATION_LEVEL_COLUMN, NUMBER_OF_CHILD_COLUMN,
+               RISK_LEVEL_COLUMN, TOTAL_TCR_COLUMN, SALARY_COLUMN, SECURITY_CODE_COLUMN, SYMBOL_COLUMN, NAME_COLUMN, PRICE_COLUMN, CHANGE_COLUMN,
+               CHANGE_PERCENTAGE_COLUMN, MARKET_CAPTIAL_COLUMN,
+               #   TRAILING_P_E_COLUMN,
+               #   REVENUE_COLUMN,
+               VOLUME_COLUMN,
+               #   TOTAL_CASH_COLUMN,
+               #   TOTAL_DEBT_COLUMN,
+               FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, SECTOR_COLUMN, INDUSTRY_COLUMN,
+               'age_category',
+               'user_index',
+               'age_index',
+               'gender_index',
+               'edu_level_index',
+               'marital_status_index',
+               'symbol_index',
+               'sector_index',
+               'industry_index']
+
 PROBABILITY_COLUMN = 'probability (%)'
 
 # read file
@@ -79,15 +98,52 @@ in_df = pd.read_csv(Config.getNNProcessingFileInput(),
     INDUSTRY_COLUMN: 'str'
 })
 
+# read file
+out_df = pd.read_csv(Config.getNNPostProcessingFileInput(),
+                     sep=",",
+                     names=OUT_HEADERS,
+                     header=0,
+                     dtype={
+    USER_COLUMN: 'str',
+    AGE_COLUMN: np.int32,
+    GENDER_COLUMN: 'str',
+    MARITAL_STATUS_COLUMN: 'str',
+    EDUCATION_LEVEL_COLUMN: 'str',
+    NUMBER_OF_CHILD_COLUMN: np.int32,
+    RISK_LEVEL_COLUMN: np.int32,
+    TOTAL_TCR_COLUMN: np.float64,
+    SALARY_COLUMN: np.float64,
+    SECURITY_CODE_COLUMN: 'str',
+    SYMBOL_COLUMN: 'str',
+    NAME_COLUMN: 'str',
+    PRICE_COLUMN: np.float64,
+    CHANGE_COLUMN: np.float64,
+    CHANGE_PERCENTAGE_COLUMN: np.float64,
+    MARKET_CAPTIAL_COLUMN: np.float64,
+    # TRAILING_P_E_COLUMN: np.float64,
+    # REVENUE_COLUMN: np.float64,
+    VOLUME_COLUMN: np.float64,
+    # TOTAL_CASH_COLUMN: np.float64,
+    # TOTAL_DEBT_COLUMN: np.float64,
+    FIVE_YEAR_AVERAGE_DIVIDEND_YIELD: np.float64,
+    SECTOR_COLUMN: 'str',
+    INDUSTRY_COLUMN: 'str'
+})
+
 
 class DataStore:
     @staticmethod
     def getNNFileInput():
         return in_df
 
+    @staticmethod
+    def getNNPostProcessingFileInput():
+        return out_df
+
 
 def main():
     print(DataStore.getNNFileInput())
+    print(DataStore.getNNPostProcessingFileInput())
 
 
 if __name__ == '__main__':
