@@ -105,6 +105,11 @@ def main():
         pre_processing_file_df[SALARY_COLUMN].notnull() &
         pre_processing_file_df[SECURITY_CODE_COLUMN].notnull()
     ]
+
+    pre_processing_file_df[RISK_LEVEL_COLUMN] = pre_processing_file_df[RISK_LEVEL_COLUMN].astype(
+        str).astype(float).astype(int)
+
+    pre_processing_file_df = pre_processing_file_df[pre_processing_file_df[RISK_LEVEL_COLUMN] > 0]
     print(pre_processing_file_df)
 
     product_file_df = pd.read_csv(Config.getNNPreProcessingProductFileInput(),
