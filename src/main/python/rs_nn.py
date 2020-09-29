@@ -276,7 +276,7 @@ def main():
         encoded_features.append(encoded_categorical_col)
 
     # Products
-    for header in [ds.CHANGE_COLUMN,
+    for header in [ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
                    ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
                    #    ds.TRAILING_P_E_COLUMN,
                    #    ds.REVENUE_COLUMN,
