@@ -81,17 +81,30 @@ def main():
                                          names=PRE_PROCESSING_FILE_HEADERS,
                                          header=0,
                                          dtype={
-        CUSTOMER_COLUMN: 'str',
-        AGE_COLUMN: np.int32,
-        GENDER_COLUMN: 'str',
-        MARITAL_STATUS_COLUMN: 'str',
-        EDUCATION_LEVEL_COLUMN: 'str',
-        NUMBER_OF_CHILD_COLUMN: np.int32,
-        RISK_LEVEL_COLUMN: np.int32,
-        TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN: np.float64,
-        SALARY_COLUMN: np.float64,
-        SECURITY_CODE_COLUMN: 'str'
+        # CUSTOMER_COLUMN: 'str',
+        # AGE_COLUMN: 'str',
+        # GENDER_COLUMN: 'str',
+        # MARITAL_STATUS_COLUMN: 'str',
+        # EDUCATION_LEVEL_COLUMN: 'str',
+        # NUMBER_OF_CHILD_COLUMN: np.int32,
+        # RISK_LEVEL_COLUMN: np.int32,
+        # TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN: np.float64,
+        # SALARY_COLUMN: np.float64,
+        # SECURITY_CODE_COLUMN: 'str'
     })
+
+    pre_processing_file_df = pre_processing_file_df[
+        pre_processing_file_df[CUSTOMER_COLUMN].notnull() &
+        pre_processing_file_df[AGE_COLUMN].notnull() &
+        pre_processing_file_df[GENDER_COLUMN].notnull() &
+        pre_processing_file_df[MARITAL_STATUS_COLUMN].notnull() &
+        pre_processing_file_df[EDUCATION_LEVEL_COLUMN].notnull() &
+        pre_processing_file_df[NUMBER_OF_CHILD_COLUMN].notnull() &
+        pre_processing_file_df[RISK_LEVEL_COLUMN].notnull() &
+        pre_processing_file_df[TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN].notnull() &
+        pre_processing_file_df[SALARY_COLUMN].notnull() &
+        pre_processing_file_df[SECURITY_CODE_COLUMN].notnull()
+    ]
     print(pre_processing_file_df)
 
     product_file_df = pd.read_csv(Config.getNNPreProcessingProductFileInput(),
