@@ -159,6 +159,12 @@ def main():
             '.')[0]) == 5 else '0' + str(x).split('.')[0]
     )
 
+    pre_processing_file_df = pre_processing_file_df[pre_processing_file_df[SECURITY_CODE_COLUMN].isin(
+        product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN]
+    )]
+
+    print(pre_processing_file_df)
+
     pre_processing_file_df[SYMBOL_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
         lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][SYMBOL_COLUMN].to_numpy()[0])
 
