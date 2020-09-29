@@ -167,11 +167,11 @@ def main():
         new_row.append(product_df[ds.CHANGE_COLUMN].to_numpy()[0])
         new_row.append(product_df[ds.CHANGE_PERCENTAGE_COLUMN].to_numpy()[0])
         new_row.append(product_df[ds.MARKET_CAPTIAL_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[0])
+        # new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[0])
+        # new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[0])
         new_row.append(product_df[ds.VOLUME_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[0])
+        # new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[0])
+        # new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[0])
         new_row.append(
             product_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[0])
         new_row.append(product_df[ds.SECTOR_COLUMN].to_numpy()[0])
@@ -184,7 +184,12 @@ def main():
     df = pd.DataFrame(data=new_table)
     df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NUMBER_OF_CHILD_COLUMN,
                   ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN, ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
-                  ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN, ds.TRAILING_P_E_COLUMN, ds.REVENUE_COLUMN, ds.VOLUME_COLUMN, ds.TOTAL_CASH_COLUMN, ds.TOTAL_DEBT_COLUMN,
+                  ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
+                  #   ds.TRAILING_P_E_COLUMN,
+                  #   ds.REVENUE_COLUMN,
+                  ds.VOLUME_COLUMN,
+                  #   ds.TOTAL_CASH_COLUMN,
+                  #   ds.TOTAL_DEBT_COLUMN,
                   ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN,
                   TARGET]
 
@@ -210,17 +215,17 @@ def main():
         str).astype(float)
     df[ds.MARKET_CAPTIAL_COLUMN] = df[ds.MARKET_CAPTIAL_COLUMN].astype(
         str).astype(float)
-    df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
-        str).astype(float)
-    df[ds.REVENUE_COLUMN] = df[ds.REVENUE_COLUMN].astype(
-        str).astype(float)
+    # df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
+    #     str).astype(float)
+    # df[ds.REVENUE_COLUMN] = df[ds.REVENUE_COLUMN].astype(
+    #     str).astype(float)
     df[ds.VOLUME_COLUMN] = df[ds.VOLUME_COLUMN].astype(
         str).astype(float)
 
-    df[ds.TOTAL_CASH_COLUMN] = df[ds.TOTAL_CASH_COLUMN].astype(
-        str).astype(float)
-    df[ds.TOTAL_DEBT_COLUMN] = df[ds.TOTAL_DEBT_COLUMN].astype(
-        str).astype(float)
+    # df[ds.TOTAL_CASH_COLUMN] = df[ds.TOTAL_CASH_COLUMN].astype(
+    #     str).astype(float)
+    # df[ds.TOTAL_DEBT_COLUMN] = df[ds.TOTAL_DEBT_COLUMN].astype(
+    #     str).astype(float)
     df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
         str).astype(float)
 
@@ -272,7 +277,12 @@ def main():
 
     # Products
     for header in [ds.CHANGE_COLUMN,
-                   ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN, ds.TRAILING_P_E_COLUMN, ds.REVENUE_COLUMN, ds.VOLUME_COLUMN, ds.TOTAL_CASH_COLUMN, ds.TOTAL_DEBT_COLUMN,
+                   ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
+                   #    ds.TRAILING_P_E_COLUMN,
+                   #    ds.REVENUE_COLUMN,
+                   ds.VOLUME_COLUMN,
+                   #    ds.TOTAL_CASH_COLUMN,
+                   #    ds.TOTAL_DEBT_COLUMN,
                    ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD]:
         numeric_col = tf.keras.Input(shape=(1,), name=header)
         normalization_layer = get_normalization_layer(header, train_ds)

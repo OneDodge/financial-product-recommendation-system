@@ -62,16 +62,16 @@ def productRecommendationApi():
             0])
         new_row.append(product_df[ds.MARKET_CAPTIAL_COLUMN].to_numpy()[
             0])
-        new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[
-            0])
-        new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[
-            0])
+        # new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[
+        #     0])
+        # new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[
+        #     0])
         new_row.append(product_df[ds.VOLUME_COLUMN].to_numpy()[
             0])
-        new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[
-            0])
-        new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[
-            0])
+        # new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[
+        #     0])
+        # new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[
+        #     0])
         new_row.append(product_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[
             0])
         new_row.append(product_df[ds.SECTOR_COLUMN].to_numpy()[
@@ -90,7 +90,11 @@ def productRecommendationApi():
                             ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN,
                             ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
                             ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
-                            ds.TRAILING_P_E_COLUMN, ds.REVENUE_COLUMN, ds.VOLUME_COLUMN, ds.TOTAL_CASH_COLUMN, ds.TOTAL_DEBT_COLUMN,
+                            # ds.TRAILING_P_E_COLUMN,
+                            # ds.REVENUE_COLUMN,
+                            ds.VOLUME_COLUMN,
+                            # ds.TOTAL_CASH_COLUMN,
+                            # ds.TOTAL_DEBT_COLUMN,
                             ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN]
 
     new_table_df[ds.AGE_COLUMN] = new_table_df[ds.AGE_COLUMN].astype(
@@ -115,17 +119,17 @@ def productRecommendationApi():
         str).astype(float)
     new_table_df[ds.MARKET_CAPTIAL_COLUMN] = new_table_df[ds.MARKET_CAPTIAL_COLUMN].astype(
         str).astype(float)
-    new_table_df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.REVENUE_COLUMN] = new_table_df[ds.REVENUE_COLUMN].astype(
-        str).astype(float)
+    # new_table_df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
+    #     str).astype(float)
+    # new_table_df[ds.REVENUE_COLUMN] = new_table_df[ds.REVENUE_COLUMN].astype(
+    #     str).astype(float)
     new_table_df[ds.VOLUME_COLUMN] = new_table_df[ds.VOLUME_COLUMN].astype(
         str).astype(float)
 
-    new_table_df[ds.TOTAL_CASH_COLUMN] = new_table_df[ds.TOTAL_CASH_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.TOTAL_DEBT_COLUMN] = new_table_df[ds.TOTAL_DEBT_COLUMN].astype(
-        str).astype(float)
+    # new_table_df[ds.TOTAL_CASH_COLUMN] = new_table_df[ds.TOTAL_CASH_COLUMN].astype(
+    #     str).astype(float)
+    # new_table_df[ds.TOTAL_DEBT_COLUMN] = new_table_df[ds.TOTAL_DEBT_COLUMN].astype(
+    #     str).astype(float)
     new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
         str).astype(float)
 
