@@ -11,20 +11,32 @@ with open(CONFIG_PATH) as file:
 
 class Config:
     @staticmethod
-    def getNNFileInput():
-        return cf['nn']['file']['input']
+    def getNNProductFileInput():
+        return cf['nn']['product']['file']['input']
 
     @staticmethod
-    def getNNIndex():
-        return cf['nn']['file']['output']['index']
+    def getNNPreProcessingCustomerFileInput():
+        return cf['nn']['pre-processing']['customer']['file']['input']
+
+    @staticmethod
+    def getNNPreProcessingProductFileInput():
+        return cf['nn']['pre-processing']['product']['file']['input']
+
+    @staticmethod
+    def getNNPreProcessingFileOutput():
+        return cf['nn']['pre-processing']['file']['output']
+
+    @staticmethod
+    def getNNProcessingFileInput():
+        return cf['nn']['processing']['file']['input']
 
     @staticmethod
     def getNNCheckpoint():
-        return cf['nn']['file']['output']['checkpoint']
+        return cf['nn']['processing']['file']['output']['checkpoint']
 
     @staticmethod
     def getNNModel():
-        return cf['nn']['file']['output']['model']
+        return cf['nn']['processing']['file']['output']['model']
 
     @staticmethod
     def get():

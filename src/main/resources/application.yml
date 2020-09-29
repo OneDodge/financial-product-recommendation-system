@@ -1,36 +1,19 @@
 nn:
-  file:
-    input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/CUST_INVESTMENT.csv
-    output:
-      index: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/index/
-      checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
-      model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
-
-ageRepository:
-  category:
-    groups: <18,18-30,30-44,44-54,54-90,90+
-    boundries: -1,18,30,44,54,90
-    enable: true
-
-userRepository:
-  live: false
-  fakeUser: 99999999
-
-genderRepository:
-  name: M,F
-
-maritalStatusRepository:
-  name: SINGLE,MARRIED,DIVORCED
-
-haveChildRepository:
-  name: Y,N
-
-educationRepository:
-  name: PRIMARY,SECONDARY,UNIVERSITY,POSTGRADUATE
-
-productAssetClassRepository:
-  name: Equity Developed Market
-
-productRepository:
-  live: false
-  fakeProduct: 99999999
+  product:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+  pre-processing:
+    customer:
+      file:
+        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_stock.txt
+    product:
+      file:
+        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv
+    file:
+      output: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+  processing:
+    file:
+      input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/pre-processed.csv
+      output:
+        checkpoint: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/checkpoint/
+        model: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/output/model/recommendation_system_model/
