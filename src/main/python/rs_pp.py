@@ -129,6 +129,9 @@ def main():
     product_file_df[TOTAL_DEBT_COLUMN] = product_file_df[TOTAL_DEBT_COLUMN].apply(
         lambda x: KMBT2Number(x))
 
+    product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].apply(
+        lambda x: 0 if math.isnan(x) else x)
+
     product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] = product_file_df[SYMBOL_COLUMN].apply(
         lambda x: str(x).split('.')[0] if len(str(x).split(
             '.')[0]) == 5 else '0' + str(x).split('.')[0]
@@ -178,6 +181,9 @@ def main():
 
     pre_processing_file_df.to_csv(
         Config.getNNPreProcessingFileOutput(), index=False)
+
+    product_file_df.to_csv(
+        Config.getNNPreProcessingFileOutput() + ".product", index=False)
 
 
 if __name__ == '__main__':
