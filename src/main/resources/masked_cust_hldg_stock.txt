@@ -1,3 +1,7 @@
 customer,age,gender,marital,edu_level,num_of_child,risk_level,total_tcr,salary,security_cde
 A,78,F,M,S,0,1,1,0.00,02628
 B,78,F,M,S,0,1,1,0.00,00005
+C,,,,,,,,,
+D,78,F,M,S,0,-1,1,0.00,02628
+E,78,F,M,S,0,1,1,0.00,ABC12345
+F,78,F,M,S,0,1,1,0.00,00088
