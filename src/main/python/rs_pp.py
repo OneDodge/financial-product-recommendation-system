@@ -129,6 +129,23 @@ def main():
         INDUSTRY_COLUMN: 'str'
     })
 
+    product_file_df = product_file_df[
+        product_file_df[SYMBOL_COLUMN].notnull() &
+        product_file_df[NAME_COLUMN].notnull() &
+        product_file_df[PRICE_COLUMN].notnull() &
+        product_file_df[CHANGE_COLUMN].notnull() &
+        product_file_df[CHANGE_PERCENTAGE_COLUMN].notnull() &
+        product_file_df[MARKET_CAPTIAL_COLUMN].notnull() &
+        product_file_df[TRAILING_P_E_COLUMN].notnull() &
+        product_file_df[REVENUE_COLUMN].notnull() &
+        product_file_df[VOLUME_COLUMN].notnull() &
+        product_file_df[TOTAL_CASH_COLUMN].notnull() &
+        product_file_df[TOTAL_DEBT_COLUMN].notnull() &
+        product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].notnull() &
+        product_file_df[SECTOR_COLUMN].notnull() &
+        product_file_df[INDUSTRY_COLUMN].notnull()
+    ]
+
     product_file_df[CHANGE_PERCENTAGE_COLUMN] = product_file_df[CHANGE_PERCENTAGE_COLUMN].apply(
         lambda x: str(x).split('%')[0])
 
