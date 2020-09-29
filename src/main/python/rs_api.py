@@ -20,7 +20,7 @@ tf.keras.backend.set_floatx('float64')
 app = Flask(__name__)
 CORS(app)
 
-model = load_model(Config.getNNModel(), compile=False)
+model = load_model(Config.getNNModel())
 
 # read file
 df = DataStore.getNNPostProcessingFileInput()
