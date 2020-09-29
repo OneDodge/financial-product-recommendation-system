@@ -27,6 +27,7 @@ FLAGS = flags.FLAGS
 
 tf.config.threading.set_inter_op_parallelism_threads(12)
 tf.config.threading.set_intra_op_parallelism_threads(12)
+tf.keras.backend.set_floatx('float64')
 
 strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
 print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
