@@ -137,13 +137,13 @@ def main():
         lambda x: str(x).split('%')[0])
 
     product_file_df[MARKET_CAPTIAL_COLUMN] = product_file_df[MARKET_CAPTIAL_COLUMN].apply(
-        lambda x: KMBT2Number(x))
+        lambda x: str(KMBT2Number(x)).replace(",", ""))
 
     # product_file_df[REVENUE_COLUMN] = product_file_df[REVENUE_COLUMN].apply(
     #     lambda x: KMBT2Number(x))
 
     product_file_df[VOLUME_COLUMN] = product_file_df[VOLUME_COLUMN].apply(
-        lambda x: KMBT2Number(x))
+        lambda x: str(KMBT2Number(x)).replace(",", ""))
 
     # product_file_df[TOTAL_CASH_COLUMN] = product_file_df[TOTAL_CASH_COLUMN].apply(
     #     lambda x: KMBT2Number(x))

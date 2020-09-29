@@ -1,3 +1,4 @@
 customer,age,gender,marital,edu_level,num_of_child,risk_level,total_tcr,salary,security_code,symbol,name,price,change,change_percentage,market_captial,volume,5_year_average_dividend_yield,sector,industry,age_category,user_index,age_index,gender_index,edu_level_index,marital_status_index,symbol_index,sector_index,industry_index
-A,78,F,M,S,0,1,1.0,0.0,02628,2628.HK,China Life Insurance Company Limited,17.1,-0.1,-0.58,1.2e+18,33552000.0,1.96,Financial Services,Insurance—Life,54-90,0,4,0,0,0,1,0,1
+A,78,F,M,S,0,1,1.0,0.0,02628,2628.HK,China Life Insurance Company Limited,17.1,-0.1,-0.58,1.2e+18,33552000.0,1.96,Financial Services,Insurance—Life,54-90,0,4,0,0,0,2,0,1
 B,78,F,M,S,0,1,1.0,0.0,00005,0005.HK,HSBC Holdings plc,28.2,-0.4,-1.4,575390000000000.0,42466000.0,6.22,Financial Services,Banks—Diversified,54-90,1,4,0,0,0,0,0,0
+F,78,F,M,S,0,1,1.0,0.0,00088,0088.HK,Tai Cheung Holdings Limited,4.69,-0.06,-1.26,2896000000000.0,55000.0,4.71,Real Estate,Real Estate—Development,54-90,2,4,0,0,0,1,1,2
