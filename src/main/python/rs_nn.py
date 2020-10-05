@@ -128,7 +128,8 @@ def main():
     df = DataStore.getNNFileInput()
 
     # create user product matrix
-    df[ds.USER_INDEX_COLUMN] = df[ds.USER_COLUMN].astype('category').cat.codes
+    df[ds.USER_INDEX_COLUMN] = df[ds.CUSTOMER_COLUMN].astype(
+        'category').cat.codes
     df[ds.PRODUCT_INDEX_COLUMN] = df[ds.SECURITY_CODE_COLUMN].astype(
         'category').cat.codes
 
@@ -146,6 +147,8 @@ def main():
     user_input_train, item_input_train, labels_train = get_train_samples(
         mat_train, num_negatives)
 
+    print(df)
+
     # flatten user product matrix in to table
     new_table = []
     for i in range(len(user_input_train)):
@@ -161,21 +164,16 @@ def main():
         new_row.append(user_df[ds.EDUCATION_LEVEL_COLUMN].to_numpy()[0])
         new_row.append(user_df[ds.NUMBER_OF_CHILD_COLUMN].to_numpy()[0])
         new_row.append(product_df[ds.RISK_LEVEL_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.TOTAL_TCR_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.SALARY_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.PRICE_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.CHANGE_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.CHANGE_PERCENTAGE_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.MARKET_CAPTIAL_COLUMN].to_numpy()[0])
-        # new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[0])
-        # new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.VOLUME_COLUMN].to_numpy()[0])
-        # new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[0])
-        # new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[0])
         new_row.append(
-            product_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[0])
-        new_row.append(product_df[ds.SECTOR_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.INDUSTRY_COLUMN].to_numpy()[0])
+            product_df[ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.SALARY_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.NCR_INDICATOR_COLUMN].to_numpy()[0])
+
+        new_row.append(product_df[ds.SECURITY_CODE_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.SUB_TYPE_CODE_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.SECURITY_RISK_LEVEL_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.PRICE_CCY_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.ASSET_CLASS_COLUMN].to_numpy()[0])
 
         new_row.append(label)
         new_table.append(new_row)
@@ -183,14 +181,8 @@ def main():
     new_table = np.array(new_table)
     df = pd.DataFrame(data=new_table)
     df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NUMBER_OF_CHILD_COLUMN,
-                  ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN, ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
-                  ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
-                  #   ds.TRAILING_P_E_COLUMN,
-                  #   ds.REVENUE_COLUMN,
-                  ds.VOLUME_COLUMN,
-                  #   ds.TOTAL_CASH_COLUMN,
-                  #   ds.TOTAL_DEBT_COLUMN,
-                  ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN,
+                  ds.RISK_LEVEL_COLUMN, ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN, ds.SALARY_COLUMN, ds.NCR_INDICATOR_COLUMN, ds.SECURITY_CODE_COLUMN, ds.SUB_TYPE_CODE_COLUMN,
+                  ds.SECURITY_RISK_LEVEL_COLUMN, ds.PRICE_CCY_COLUMN, ds.ASSET_CLASS_COLUMN,
                   TARGET]
 
     # Re cast numbers from string
@@ -199,35 +191,13 @@ def main():
         str).astype(int)
     df[ds.RISK_LEVEL_COLUMN] = df[ds.RISK_LEVEL_COLUMN].astype(
         str).astype(int)
-    df[ds.TOTAL_TCR_COLUMN] = df[ds.TOTAL_TCR_COLUMN].astype(
+    df[ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN] = df[ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN].astype(
         str).astype(float)
     df[ds.SALARY_COLUMN] = df[ds.SALARY_COLUMN].astype(
         str).astype(float)
 
-    df[ds.PRICE_COLUMN] = df[ds.PRICE_COLUMN].astype(
-        str).astype(float)
-
-    df[ds.PRICE_COLUMN] = df[ds.PRICE_COLUMN].astype(
-        str).astype(float)
-    df[ds.CHANGE_COLUMN] = df[ds.CHANGE_COLUMN].astype(
-        str).astype(float)
-    df[ds.CHANGE_PERCENTAGE_COLUMN] = df[ds.CHANGE_PERCENTAGE_COLUMN].astype(
-        str).astype(float)
-    df[ds.MARKET_CAPTIAL_COLUMN] = df[ds.MARKET_CAPTIAL_COLUMN].astype(
-        str).astype(float)
-    # df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
-    #     str).astype(float)
-    # df[ds.REVENUE_COLUMN] = df[ds.REVENUE_COLUMN].astype(
-    #     str).astype(float)
-    df[ds.VOLUME_COLUMN] = df[ds.VOLUME_COLUMN].astype(
-        str).astype(float)
-
-    # df[ds.TOTAL_CASH_COLUMN] = df[ds.TOTAL_CASH_COLUMN].astype(
-    #     str).astype(float)
-    # df[ds.TOTAL_DEBT_COLUMN] = df[ds.TOTAL_DEBT_COLUMN].astype(
-    #     str).astype(float)
-    df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
-        str).astype(float)
+    df[ds.SECURITY_RISK_LEVEL_COLUMN] = df[ds.SECURITY_RISK_LEVEL_COLUMN].astype(
+        str).astype(int)
 
     df[TARGET] = df[TARGET].astype(str).astype(int)
 
@@ -253,7 +223,7 @@ def main():
 
     # start building features layers
     # Users
-    for header in [ds.AGE_COLUMN, ds.NUMBER_OF_CHILD_COLUMN, ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN]:
+    for header in [ds.AGE_COLUMN, ds.NUMBER_OF_CHILD_COLUMN, ds.RISK_LEVEL_COLUMN, ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN, ds.SALARY_COLUMN]:
         numeric_col = tf.keras.Input(shape=(1,), name=header)
         normalization_layer = get_normalization_layer(header, train_ds)
         encoded_numeric_col = normalization_layer(numeric_col)
@@ -263,7 +233,7 @@ def main():
         all_inputs.append(numeric_col)
         encoded_features.append(encoded_numeric_col)
 
-    for header in [ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN]:
+    for header in [ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NCR_INDICATOR_COLUMN]:
         categorical_col = tf.keras.Input(
             shape=(1,), name=header, dtype='string')
         encoding_layer = get_category_encoding_layer(header, train_ds, dtype='string',
@@ -276,14 +246,7 @@ def main():
         encoded_features.append(encoded_categorical_col)
 
     # Products
-    for header in [ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
-                   ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
-                   #    ds.TRAILING_P_E_COLUMN,
-                   #    ds.REVENUE_COLUMN,
-                   ds.VOLUME_COLUMN,
-                   #    ds.TOTAL_CASH_COLUMN,
-                   #    ds.TOTAL_DEBT_COLUMN,
-                   ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD]:
+    for header in [ds.SECURITY_RISK_LEVEL_COLUMN]:
         numeric_col = tf.keras.Input(shape=(1,), name=header)
         normalization_layer = get_normalization_layer(header, train_ds)
         encoded_numeric_col = normalization_layer(numeric_col)
@@ -293,7 +256,7 @@ def main():
         all_inputs.append(numeric_col)
         encoded_features.append(encoded_numeric_col)
 
-    for header in [ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN]:
+    for header in [ds.SECURITY_CODE_COLUMN, ds.SUB_TYPE_CODE_COLUMN, ds.PRICE_CCY_COLUMN, ds.ASSET_CLASS_COLUMN]:
         categorical_col = tf.keras.Input(
             shape=(1,), name=header, dtype='string')
         encoding_layer = get_category_encoding_layer(header, train_ds, dtype='string',

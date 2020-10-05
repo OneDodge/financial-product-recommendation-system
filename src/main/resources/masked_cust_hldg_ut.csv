@@ -1,0 +1,4 @@
+customer,age,gender,marital,edu_level,num_of_child,risk_level,total_tcr,salary,ncr_indicator,security_code, sub_type_code, security_risk_level, price_ccy, asset_class
+A,18,M,M,M,0,2,1000,10000,H, U38304,AB, 4,USD,EMEQ
+B,30,M,M,M,0,2,1000,10000,H, U62219,MB, 4,USD,EMEQ
+C,50,M,M,M,0,2,1000,10000,H, U62219,MB, 4,USD,EMEQ

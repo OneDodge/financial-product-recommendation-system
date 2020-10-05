@@ -26,32 +26,17 @@ NUMBER_OF_CHILD_COLUMN = 'num_of_child'
 RISK_LEVEL_COLUMN = 'risk_level'
 TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN = 'total_tcr'
 SALARY_COLUMN = 'salary'
+NCR_INDICATOR_COLUMN = 'ncr_indicator'
+
 SECURITY_CODE_COLUMN = 'security_code'
+SUB_TYPE_CODE_COLUMN = 'sub_type_code'
+SECURITY_RISK_LEVEL_COLUMN = 'security_risk_level'
+PRICE_CCY_COLUMN = 'price_ccy'
+ASSET_CLASS_COLUMN = 'asset_class'
 
 PRE_PROCESSING_FILE_HEADERS = [CUSTOMER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, EDUCATION_LEVEL_COLUMN, NUMBER_OF_CHILD_COLUMN,
-                               RISK_LEVEL_COLUMN, TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN, SALARY_COLUMN, SECURITY_CODE_COLUMN]
-
-# Product File Columns
-SYMBOL_COLUMN = 'symbol'
-NAME_COLUMN = 'name'
-PRICE_COLUMN = 'price'
-CHANGE_COLUMN = 'change'
-CHANGE_PERCENTAGE_COLUMN = 'change_percentage'
-MARKET_CAPTIAL_COLUMN = 'market_captial'
-TRAILING_P_E_COLUMN = 'trailing_p_e'
-REVENUE_COLUMN = 'revenue'
-VOLUME_COLUMN = 'volume'
-TOTAL_CASH_COLUMN = 'total_cash'
-TOTAL_DEBT_COLUMN = 'total_debt_column'
-FIVE_YEAR_AVERAGE_DIVIDEND_YIELD = '5_year_average_dividend_yield'
-SECTOR_COLUMN = 'sector'
-INDUSTRY_COLUMN = 'industry'
-
-PRODUCT_FILE_HEADERS = [SYMBOL_COLUMN, NAME_COLUMN, PRICE_COLUMN, CHANGE_COLUMN, CHANGE_PERCENTAGE_COLUMN, MARKET_CAPTIAL_COLUMN,
-                        TRAILING_P_E_COLUMN, REVENUE_COLUMN, VOLUME_COLUMN, TOTAL_CASH_COLUMN, TOTAL_DEBT_COLUMN,
-                        FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, SECTOR_COLUMN, INDUSTRY_COLUMN]
-
-PRODUCT_ALTERNATIVE_CODE_COLUMN = 'product_alternative_code'
+                               RISK_LEVEL_COLUMN, TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN, SALARY_COLUMN, NCR_INDICATOR_COLUMN, SECURITY_CODE_COLUMN, SUB_TYPE_CODE_COLUMN,
+                               SECURITY_RISK_LEVEL_COLUMN, PRICE_CCY_COLUMN, ASSET_CLASS_COLUMN]
 
 
 def KMBT2Number(s):
@@ -99,7 +84,13 @@ def main():
         pre_processing_file_df[RISK_LEVEL_COLUMN].notnull() &
         pre_processing_file_df[TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN].notnull() &
         pre_processing_file_df[SALARY_COLUMN].notnull() &
-        pre_processing_file_df[SECURITY_CODE_COLUMN].notnull()
+        pre_processing_file_df[NCR_INDICATOR_COLUMN].notnull() &
+        pre_processing_file_df[SECURITY_CODE_COLUMN].notnull() &
+
+        pre_processing_file_df[SUB_TYPE_CODE_COLUMN].notnull() &
+        pre_processing_file_df[SECURITY_RISK_LEVEL_COLUMN].notnull() &
+        pre_processing_file_df[PRICE_CCY_COLUMN].notnull() &
+        pre_processing_file_df[ASSET_CLASS_COLUMN].notnull()
     ]
 
     pre_processing_file_df[RISK_LEVEL_COLUMN] = pre_processing_file_df[RISK_LEVEL_COLUMN].astype(
@@ -108,122 +99,122 @@ def main():
     pre_processing_file_df = pre_processing_file_df[pre_processing_file_df[RISK_LEVEL_COLUMN] > 0]
     print(pre_processing_file_df)
 
-    product_file_df = pd.read_csv(Config.getNNPreProcessingProductFileInput(),
-                                  sep=",",
-                                  names=PRODUCT_FILE_HEADERS,
-                                  header=0,
-                                  dtype={
-        SYMBOL_COLUMN: 'str',
-        NAME_COLUMN: 'str',
-        PRICE_COLUMN: np.float64,
-        CHANGE_COLUMN: np.float64,
-        CHANGE_PERCENTAGE_COLUMN: 'str',
-        MARKET_CAPTIAL_COLUMN: 'str',
-        TRAILING_P_E_COLUMN: 'str',
-        REVENUE_COLUMN: 'str',
-        VOLUME_COLUMN: 'str',
-        TOTAL_CASH_COLUMN: 'str',
-        TOTAL_DEBT_COLUMN: 'str',
-        FIVE_YEAR_AVERAGE_DIVIDEND_YIELD: np.float64,
-        SECTOR_COLUMN: 'str',
-        INDUSTRY_COLUMN: 'str'
-    })
+    # product_file_df = pd.read_csv(Config.getNNPreProcessingProductFileInput(),
+    #                               sep=",",
+    #                               names=PRODUCT_FILE_HEADERS,
+    #                               header=0,
+    #                               dtype={
+    #     SYMBOL_COLUMN: 'str',
+    #     NAME_COLUMN: 'str',
+    #     PRICE_COLUMN: np.float64,
+    #     CHANGE_COLUMN: np.float64,
+    #     CHANGE_PERCENTAGE_COLUMN: 'str',
+    #     MARKET_CAPTIAL_COLUMN: 'str',
+    #     TRAILING_P_E_COLUMN: 'str',
+    #     REVENUE_COLUMN: 'str',
+    #     VOLUME_COLUMN: 'str',
+    #     TOTAL_CASH_COLUMN: 'str',
+    #     TOTAL_DEBT_COLUMN: 'str',
+    #     FIVE_YEAR_AVERAGE_DIVIDEND_YIELD: np.float64,
+    #     SECTOR_COLUMN: 'str',
+    #     INDUSTRY_COLUMN: 'str'
+    # })
 
-    product_file_df = product_file_df[
-        product_file_df[SYMBOL_COLUMN].notnull() &
-        product_file_df[NAME_COLUMN].notnull() &
-        product_file_df[PRICE_COLUMN].notnull() &
-        product_file_df[CHANGE_COLUMN].notnull() &
-        product_file_df[CHANGE_PERCENTAGE_COLUMN].notnull() &
-        product_file_df[MARKET_CAPTIAL_COLUMN].notnull() &
-        product_file_df[TRAILING_P_E_COLUMN].notnull() &
-        product_file_df[REVENUE_COLUMN].notnull() &
-        product_file_df[VOLUME_COLUMN].notnull() &
-        product_file_df[TOTAL_CASH_COLUMN].notnull() &
-        product_file_df[TOTAL_DEBT_COLUMN].notnull() &
-        product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].notnull() &
-        product_file_df[SECTOR_COLUMN].notnull() &
-        product_file_df[INDUSTRY_COLUMN].notnull()
-    ]
+    # product_file_df = product_file_df[
+    #     product_file_df[SYMBOL_COLUMN].notnull() &
+    #     product_file_df[NAME_COLUMN].notnull() &
+    #     product_file_df[PRICE_COLUMN].notnull() &
+    #     product_file_df[CHANGE_COLUMN].notnull() &
+    #     product_file_df[CHANGE_PERCENTAGE_COLUMN].notnull() &
+    #     product_file_df[MARKET_CAPTIAL_COLUMN].notnull() &
+    #     product_file_df[TRAILING_P_E_COLUMN].notnull() &
+    #     product_file_df[REVENUE_COLUMN].notnull() &
+    #     product_file_df[VOLUME_COLUMN].notnull() &
+    #     product_file_df[TOTAL_CASH_COLUMN].notnull() &
+    #     product_file_df[TOTAL_DEBT_COLUMN].notnull() &
+    #     product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].notnull() &
+    #     product_file_df[SECTOR_COLUMN].notnull() &
+    #     product_file_df[INDUSTRY_COLUMN].notnull()
+    # ]
 
-    product_file_df[CHANGE_PERCENTAGE_COLUMN] = product_file_df[CHANGE_PERCENTAGE_COLUMN].apply(
-        lambda x: str(x).split('%')[0])
+    # product_file_df[CHANGE_PERCENTAGE_COLUMN] = product_file_df[CHANGE_PERCENTAGE_COLUMN].apply(
+    #     lambda x: str(x).split('%')[0])
 
-    product_file_df[MARKET_CAPTIAL_COLUMN] = product_file_df[MARKET_CAPTIAL_COLUMN].apply(
-        lambda x: str(KMBT2Number(x)).replace(",", ""))
+    # product_file_df[MARKET_CAPTIAL_COLUMN] = product_file_df[MARKET_CAPTIAL_COLUMN].apply(
+    #     lambda x: str(KMBT2Number(x)).replace(",", ""))
 
-    # product_file_df[REVENUE_COLUMN] = product_file_df[REVENUE_COLUMN].apply(
-    #     lambda x: KMBT2Number(x))
+    # # product_file_df[REVENUE_COLUMN] = product_file_df[REVENUE_COLUMN].apply(
+    # #     lambda x: KMBT2Number(x))
 
-    product_file_df[VOLUME_COLUMN] = product_file_df[VOLUME_COLUMN].apply(
-        lambda x: str(KMBT2Number(x)).replace(",", ""))
+    # product_file_df[VOLUME_COLUMN] = product_file_df[VOLUME_COLUMN].apply(
+    #     lambda x: str(KMBT2Number(x)).replace(",", ""))
 
-    # product_file_df[TOTAL_CASH_COLUMN] = product_file_df[TOTAL_CASH_COLUMN].apply(
-    #     lambda x: KMBT2Number(x))
+    # # product_file_df[TOTAL_CASH_COLUMN] = product_file_df[TOTAL_CASH_COLUMN].apply(
+    # #     lambda x: KMBT2Number(x))
 
-    # product_file_df[TOTAL_DEBT_COLUMN] = product_file_df[TOTAL_DEBT_COLUMN].apply(
-    #     lambda x: KMBT2Number(x))
+    # # product_file_df[TOTAL_DEBT_COLUMN] = product_file_df[TOTAL_DEBT_COLUMN].apply(
+    # #     lambda x: KMBT2Number(x))
 
-    product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].apply(
-        lambda x: 0 if math.isnan(x) else x)
+    # product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = product_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].apply(
+    #     lambda x: 0 if math.isnan(x) else x)
 
-    product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] = product_file_df[SYMBOL_COLUMN].apply(
-        lambda x: str(x).split('.')[0] if len(str(x).split(
-            '.')[0]) == 5 else '0' + str(x).split('.')[0]
-    )
+    # product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] = product_file_df[SYMBOL_COLUMN].apply(
+    #     lambda x: str(x).split('.')[0] if len(str(x).split(
+    #         '.')[0]) == 5 else '0' + str(x).split('.')[0]
+    # )
 
-    pre_processing_file_df = pre_processing_file_df[pre_processing_file_df[SECURITY_CODE_COLUMN].isin(
-        product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN]
-    )]
+    # pre_processing_file_df = pre_processing_file_df[pre_processing_file_df[SECURITY_CODE_COLUMN].isin(
+    #     product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN]
+    # )]
 
-    print(pre_processing_file_df)
+    # print(pre_processing_file_df)
 
-    pre_processing_file_df[SYMBOL_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][SYMBOL_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[SYMBOL_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][SYMBOL_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[NAME_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][NAME_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[NAME_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][NAME_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[PRICE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][PRICE_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[PRICE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][PRICE_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[CHANGE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][CHANGE_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[CHANGE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][CHANGE_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[CHANGE_PERCENTAGE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][CHANGE_PERCENTAGE_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[CHANGE_PERCENTAGE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][CHANGE_PERCENTAGE_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[MARKET_CAPTIAL_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][MARKET_CAPTIAL_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[MARKET_CAPTIAL_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][MARKET_CAPTIAL_COLUMN].to_numpy()[0])
 
-    # pre_processing_file_df[TRAILING_P_E_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TRAILING_P_E_COLUMN].to_numpy()[0])
+    # # pre_processing_file_df[TRAILING_P_E_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    # #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TRAILING_P_E_COLUMN].to_numpy()[0])
 
-    # pre_processing_file_df[REVENUE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][REVENUE_COLUMN].to_numpy()[0])
+    # # pre_processing_file_df[REVENUE_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    # #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][REVENUE_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[VOLUME_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][VOLUME_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[VOLUME_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][VOLUME_COLUMN].to_numpy()[0])
 
-    # pre_processing_file_df[TOTAL_CASH_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TOTAL_CASH_COLUMN].to_numpy()[0])
+    # # pre_processing_file_df[TOTAL_CASH_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    # #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TOTAL_CASH_COLUMN].to_numpy()[0])
 
-    # pre_processing_file_df[TOTAL_DEBT_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TOTAL_DEBT_COLUMN].to_numpy()[0])
+    # # pre_processing_file_df[TOTAL_DEBT_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    # #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][TOTAL_DEBT_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[0])
+    # pre_processing_file_df[FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[0])
 
-    pre_processing_file_df[SECTOR_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][SECTOR_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[SECTOR_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][SECTOR_COLUMN].to_numpy()[0])
 
-    pre_processing_file_df[INDUSTRY_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
-        lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][INDUSTRY_COLUMN].to_numpy()[0])
+    # pre_processing_file_df[INDUSTRY_COLUMN] = pre_processing_file_df[SECURITY_CODE_COLUMN].apply(
+    #     lambda x: product_file_df[product_file_df[PRODUCT_ALTERNATIVE_CODE_COLUMN] == x][INDUSTRY_COLUMN].to_numpy()[0])
 
     pre_processing_file_df.to_csv(
         Config.getNNPreProcessingFileOutput(), index=False)
-    product_file_df.to_csv(
-        Config.getNNPreProcessingFileOutput() + ".product", index=False)
+    # product_file_df.to_csv(
+    #     Config.getNNPreProcessingFileOutput() + ".product", index=False)
 
 
 if __name__ == '__main__':

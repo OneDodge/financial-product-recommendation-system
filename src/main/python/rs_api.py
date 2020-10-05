@@ -39,11 +39,12 @@ def productRecommendationApi():
     desired_risk_level = int(content["risk_level"])
     desired_total_tcr = float(content["total_tcr"])
     desired_salary = float(content["salary"])
+    desired_ncr_indicator = content["ncr_indicator"]
 
     new_table = []
     result_table = []
-    for symbol in df[ds.SYMBOL_COLUMN].unique():
-        product_df = df[df[ds.SYMBOL_COLUMN] == symbol].iloc[[0]]
+    for symbol in df[ds.SECURITY_CODE_COLUMN].unique():
+        product_df = df[df[ds.SECURITY_CODE_COLUMN] == symbol].iloc[[0]]
 
         new_row = []
         new_row.append(desired_age)
@@ -54,48 +55,28 @@ def productRecommendationApi():
         new_row.append(desired_risk_level)
         new_row.append(desired_total_tcr)
         new_row.append(desired_salary)
+        new_row.append(desired_ncr_indicator)
 
-        new_row.append(product_df[ds.PRICE_COLUMN].to_numpy()[0])
-        new_row.append(product_df[ds.CHANGE_COLUMN].to_numpy()[
+        new_row.append(product_df[ds.SECURITY_CODE_COLUMN].to_numpy()[0])
+        new_row.append(product_df[ds.SUB_TYPE_CODE_COLUMN].to_numpy()[
             0])
-        new_row.append(product_df[ds.CHANGE_PERCENTAGE_COLUMN].to_numpy()[
+        new_row.append(product_df[ds.SECURITY_RISK_LEVEL_COLUMN].to_numpy()[
             0])
-        new_row.append(product_df[ds.MARKET_CAPTIAL_COLUMN].to_numpy()[
+        new_row.append(product_df[ds.PRICE_CCY_COLUMN].to_numpy()[
             0])
-        # new_row.append(product_df[ds.TRAILING_P_E_COLUMN].to_numpy()[
-        #     0])
-        # new_row.append(product_df[ds.REVENUE_COLUMN].to_numpy()[
-        #     0])
-        new_row.append(product_df[ds.VOLUME_COLUMN].to_numpy()[
-            0])
-        # new_row.append(product_df[ds.TOTAL_CASH_COLUMN].to_numpy()[
-        #     0])
-        # new_row.append(product_df[ds.TOTAL_DEBT_COLUMN].to_numpy()[
-        #     0])
-        new_row.append(product_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].to_numpy()[
-            0])
-        new_row.append(product_df[ds.SECTOR_COLUMN].to_numpy()[
-            0])
-        new_row.append(product_df[ds.INDUSTRY_COLUMN].to_numpy()[
+        new_row.append(product_df[ds.ASSET_CLASS_COLUMN].to_numpy()[
             0])
 
         new_table.append(new_row)
         result_item = []
-        result_item.append(product_df[ds.SYMBOL_COLUMN].to_numpy()[
+        result_item.append(product_df[ds.SECURITY_CODE_COLUMN].to_numpy()[
             0])
         result_table.append(result_item)
 
     new_table_df = pd.DataFrame(data=np.array(new_table))
     new_table_df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NUMBER_OF_CHILD_COLUMN,
-                            ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN,
-                            ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
-                            ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
-                            # ds.TRAILING_P_E_COLUMN,
-                            # ds.REVENUE_COLUMN,
-                            ds.VOLUME_COLUMN,
-                            # ds.TOTAL_CASH_COLUMN,
-                            # ds.TOTAL_DEBT_COLUMN,
-                            ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN]
+                            ds.RISK_LEVEL_COLUMN, ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN, ds.SALARY_COLUMN, ds.NCR_INDICATOR_COLUMN, ds.SECURITY_CODE_COLUMN, ds.SUB_TYPE_CODE_COLUMN,
+                            ds.SECURITY_RISK_LEVEL_COLUMN, ds.PRICE_CCY_COLUMN, ds.ASSET_CLASS_COLUMN]
 
     new_table_df[ds.AGE_COLUMN] = new_table_df[ds.AGE_COLUMN].astype(
         str).astype(int)
@@ -103,35 +84,13 @@ def productRecommendationApi():
         str).astype(int)
     new_table_df[ds.RISK_LEVEL_COLUMN] = new_table_df[ds.RISK_LEVEL_COLUMN].astype(
         str).astype(int)
-    new_table_df[ds.TOTAL_TCR_COLUMN] = new_table_df[ds.TOTAL_TCR_COLUMN].astype(
+    new_table_df[ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN] = new_table_df[ds.TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN].astype(
         str).astype(float)
     new_table_df[ds.SALARY_COLUMN] = new_table_df[ds.SALARY_COLUMN].astype(
         str).astype(float)
 
-    new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
-        str).astype(float)
-
-    new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.CHANGE_COLUMN] = new_table_df[ds.CHANGE_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.CHANGE_PERCENTAGE_COLUMN] = new_table_df[ds.CHANGE_PERCENTAGE_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.MARKET_CAPTIAL_COLUMN] = new_table_df[ds.MARKET_CAPTIAL_COLUMN].astype(
-        str).astype(float)
-    # new_table_df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
-    #     str).astype(float)
-    # new_table_df[ds.REVENUE_COLUMN] = new_table_df[ds.REVENUE_COLUMN].astype(
-    #     str).astype(float)
-    new_table_df[ds.VOLUME_COLUMN] = new_table_df[ds.VOLUME_COLUMN].astype(
-        str).astype(float)
-
-    # new_table_df[ds.TOTAL_CASH_COLUMN] = new_table_df[ds.TOTAL_CASH_COLUMN].astype(
-    #     str).astype(float)
-    # new_table_df[ds.TOTAL_DEBT_COLUMN] = new_table_df[ds.TOTAL_DEBT_COLUMN].astype(
-    #     str).astype(float)
-    new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
-        str).astype(float)
+    new_table_df[ds.SECURITY_RISK_LEVEL_COLUMN] = new_table_df[ds.SECURITY_RISK_LEVEL_COLUMN].astype(
+        str).astype(int)
 
     input_dict = {col: tf.convert_to_tensor(
         new_table_df[col].to_numpy()) for col in new_table_df.columns}
@@ -145,7 +104,7 @@ def productRecommendationApi():
         result_table[i] = result_item
     result_table = np.array(result_table)
     result_df = pd.DataFrame(data=result_table)
-    result_df.columns = [ds.SYMBOL_COLUMN, ds.PROBABILITY_COLUMN]
+    result_df.columns = [ds.SECURITY_CODE_COLUMN, ds.PROBABILITY_COLUMN]
     result_df = result_df.sort_values(
         by=[ds.PROBABILITY_COLUMN], ascending=False)
     result_df[ds.PROBABILITY_COLUMN] = result_df[ds.PROBABILITY_COLUMN].astype(
@@ -153,146 +112,146 @@ def productRecommendationApi():
     return result_df.to_json(orient="records")
 
 
-@app.route("/recommendation/user", methods=['GET', 'POST'])
-def userRecommendationApi():
-    content = request.json
+# @app.route("/recommendation/user", methods=['GET', 'POST'])
+# def userRecommendationApi():
+#     content = request.json
 
-    desired_symbol = content["symbol"]
-    desired_name = content["name"]
-    desired_price = float(content["price"])
-    desired_change = float(content["change"])
-    desired_change_percentage = float(content["change_percentage"])
-    desired_market_capital = float(content["market_captial"])
-    desired_trailing_p_e = float(content["trailing_p_e"])
-    try:
-        desired_revenue = float(content["revenue"])
-    except:
-        desired_revenue = float("nan")
+#     desired_symbol = content["symbol"]
+#     desired_name = content["name"]
+#     desired_price = float(content["price"])
+#     desired_change = float(content["change"])
+#     desired_change_percentage = float(content["change_percentage"])
+#     desired_market_capital = float(content["market_captial"])
+#     desired_trailing_p_e = float(content["trailing_p_e"])
+#     try:
+#         desired_revenue = float(content["revenue"])
+#     except:
+#         desired_revenue = float("nan")
 
-    desired_volume = float(content["volume"])
+#     desired_volume = float(content["volume"])
 
-    try:
-        desired_total_cash = float(content["total_cash"])
-    except:
-        desired_total_cash = float("nan")
+#     try:
+#         desired_total_cash = float(content["total_cash"])
+#     except:
+#         desired_total_cash = float("nan")
 
-    try:
-        desired_total_debt = float(content["total_debt"])
-    except:
-        desired_total_debt = float("nan")
+#     try:
+#         desired_total_debt = float(content["total_debt"])
+#     except:
+#         desired_total_debt = float("nan")
 
-    desired_5_year_average_dividend_yield = float(
-        content["5_year_average_dividend_yield"])
-    desired_sector = content["sector"]
-    desired_industry = content["industry"]
+#     desired_5_year_average_dividend_yield = float(
+#         content["5_year_average_dividend_yield"])
+#     desired_sector = content["sector"]
+#     desired_industry = content["industry"]
 
-    new_table = []
-    result_table = []
-    for user_name in df[ds.USER_COLUMN].unique():
-        user_df = df[df[ds.USER_COLUMN] == user_name].iloc[[0]]
+#     new_table = []
+#     result_table = []
+#     for user_name in df[ds.USER_COLUMN].unique():
+#         user_df = df[df[ds.USER_COLUMN] == user_name].iloc[[0]]
 
-        new_row = []
-        new_row.append(user_df[ds.AGE_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.GENDER_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.MARITAL_STATUS_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.EDUCATION_LEVEL_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.NUMBER_OF_CHILD_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.RISK_LEVEL_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.TOTAL_TCR_COLUMN].to_numpy()[
-            0])
-        new_row.append(user_df[ds.SALARY_COLUMN].to_numpy()[
-            0])
+#         new_row = []
+#         new_row.append(user_df[ds.AGE_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.GENDER_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.MARITAL_STATUS_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.EDUCATION_LEVEL_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.NUMBER_OF_CHILD_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.RISK_LEVEL_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.TOTAL_TCR_COLUMN].to_numpy()[
+#             0])
+#         new_row.append(user_df[ds.SALARY_COLUMN].to_numpy()[
+#             0])
 
-        new_row.append(desired_price)
-        new_row.append(desired_change)
-        new_row.append(desired_change_percentage)
-        new_row.append(desired_market_capital)
-        # new_row.append(desired_trailing_p_e)
-        # new_row.append(desired_revenue)
-        new_row.append(desired_volume)
-        # new_row.append(desired_total_cash)
-        # new_row.append(desired_total_debt)
-        new_row.append(desired_5_year_average_dividend_yield)
-        new_row.append(desired_sector)
-        new_row.append(desired_industry)
+#         new_row.append(desired_price)
+#         new_row.append(desired_change)
+#         new_row.append(desired_change_percentage)
+#         new_row.append(desired_market_capital)
+#         # new_row.append(desired_trailing_p_e)
+#         # new_row.append(desired_revenue)
+#         new_row.append(desired_volume)
+#         # new_row.append(desired_total_cash)
+#         # new_row.append(desired_total_debt)
+#         new_row.append(desired_5_year_average_dividend_yield)
+#         new_row.append(desired_sector)
+#         new_row.append(desired_industry)
 
-        new_table.append(new_row)
-        result_item = []
-        result_item.append(user_df[ds.USER_COLUMN].to_numpy()[
-            0])
-        result_table.append(result_item)
+#         new_table.append(new_row)
+#         result_item = []
+#         result_item.append(user_df[ds.USER_COLUMN].to_numpy()[
+#             0])
+#         result_table.append(result_item)
 
-    new_table_df = pd.DataFrame(data=np.array(new_table))
-    new_table_df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NUMBER_OF_CHILD_COLUMN,
-                            ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN, ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
-                            ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
-                            # ds.TRAILING_P_E_COLUMN,
-                            # ds.REVENUE_COLUMN,
-                            ds.VOLUME_COLUMN,
-                            # ds.TOTAL_CASH_COLUMN,
-                            # ds.TOTAL_DEBT_COLUMN,
-                            ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN]
+#     new_table_df = pd.DataFrame(data=np.array(new_table))
+#     new_table_df.columns = [ds.AGE_COLUMN, ds.GENDER_COLUMN, ds.MARITAL_STATUS_COLUMN, ds.EDUCATION_LEVEL_COLUMN, ds.NUMBER_OF_CHILD_COLUMN,
+#                             ds.RISK_LEVEL_COLUMN, ds.TOTAL_TCR_COLUMN, ds.SALARY_COLUMN, ds.PRICE_COLUMN, ds.CHANGE_COLUMN,
+#                             ds.CHANGE_PERCENTAGE_COLUMN, ds.MARKET_CAPTIAL_COLUMN,
+#                             # ds.TRAILING_P_E_COLUMN,
+#                             # ds.REVENUE_COLUMN,
+#                             ds.VOLUME_COLUMN,
+#                             # ds.TOTAL_CASH_COLUMN,
+#                             # ds.TOTAL_DEBT_COLUMN,
+#                             ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, ds.SECTOR_COLUMN, ds.INDUSTRY_COLUMN]
 
-    new_table_df[ds.AGE_COLUMN] = new_table_df[ds.AGE_COLUMN].astype(
-        str).astype(int)
-    new_table_df[ds.NUMBER_OF_CHILD_COLUMN] = new_table_df[ds.NUMBER_OF_CHILD_COLUMN].astype(
-        str).astype(int)
-    new_table_df[ds.RISK_LEVEL_COLUMN] = new_table_df[ds.RISK_LEVEL_COLUMN].astype(
-        str).astype(int)
-    new_table_df[ds.TOTAL_TCR_COLUMN] = new_table_df[ds.TOTAL_TCR_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.SALARY_COLUMN] = new_table_df[ds.SALARY_COLUMN].astype(
-        str).astype(float)
+#     new_table_df[ds.AGE_COLUMN] = new_table_df[ds.AGE_COLUMN].astype(
+#         str).astype(int)
+#     new_table_df[ds.NUMBER_OF_CHILD_COLUMN] = new_table_df[ds.NUMBER_OF_CHILD_COLUMN].astype(
+#         str).astype(int)
+#     new_table_df[ds.RISK_LEVEL_COLUMN] = new_table_df[ds.RISK_LEVEL_COLUMN].astype(
+#         str).astype(int)
+#     new_table_df[ds.TOTAL_TCR_COLUMN] = new_table_df[ds.TOTAL_TCR_COLUMN].astype(
+#         str).astype(float)
+#     new_table_df[ds.SALARY_COLUMN] = new_table_df[ds.SALARY_COLUMN].astype(
+#         str).astype(float)
 
-    new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
-        str).astype(float)
+#     new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
+#         str).astype(float)
 
-    new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.CHANGE_COLUMN] = new_table_df[ds.CHANGE_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.CHANGE_PERCENTAGE_COLUMN] = new_table_df[ds.CHANGE_PERCENTAGE_COLUMN].astype(
-        str).astype(float)
-    new_table_df[ds.MARKET_CAPTIAL_COLUMN] = new_table_df[ds.MARKET_CAPTIAL_COLUMN].astype(
-        str).astype(float)
-    # new_table_df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
-    #     str).astype(float)
-    # new_table_df[ds.REVENUE_COLUMN] = new_table_df[ds.REVENUE_COLUMN].astype(
-    #     str).astype(float)
-    new_table_df[ds.VOLUME_COLUMN] = new_table_df[ds.VOLUME_COLUMN].astype(
-        str).astype(float)
+#     new_table_df[ds.PRICE_COLUMN] = new_table_df[ds.PRICE_COLUMN].astype(
+#         str).astype(float)
+#     new_table_df[ds.CHANGE_COLUMN] = new_table_df[ds.CHANGE_COLUMN].astype(
+#         str).astype(float)
+#     new_table_df[ds.CHANGE_PERCENTAGE_COLUMN] = new_table_df[ds.CHANGE_PERCENTAGE_COLUMN].astype(
+#         str).astype(float)
+#     new_table_df[ds.MARKET_CAPTIAL_COLUMN] = new_table_df[ds.MARKET_CAPTIAL_COLUMN].astype(
+#         str).astype(float)
+#     # new_table_df[ds.TRAILING_P_E_COLUMN] = df[ds.TRAILING_P_E_COLUMN].astype(
+#     #     str).astype(float)
+#     # new_table_df[ds.REVENUE_COLUMN] = new_table_df[ds.REVENUE_COLUMN].astype(
+#     #     str).astype(float)
+#     new_table_df[ds.VOLUME_COLUMN] = new_table_df[ds.VOLUME_COLUMN].astype(
+#         str).astype(float)
 
-    # new_table_df[ds.TOTAL_CASH_COLUMN] = new_table_df[ds.TOTAL_CASH_COLUMN].astype(
-    #     str).astype(float)
-    # new_table_df[ds.TOTAL_DEBT_COLUMN] = new_table_df[ds.TOTAL_DEBT_COLUMN].astype(
-    #     str).astype(float)
-    new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
-        str).astype(float)
+#     # new_table_df[ds.TOTAL_CASH_COLUMN] = new_table_df[ds.TOTAL_CASH_COLUMN].astype(
+#     #     str).astype(float)
+#     # new_table_df[ds.TOTAL_DEBT_COLUMN] = new_table_df[ds.TOTAL_DEBT_COLUMN].astype(
+#     #     str).astype(float)
+#     new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD] = new_table_df[ds.FIVE_YEAR_AVERAGE_DIVIDEND_YIELD].astype(
+#         str).astype(float)
 
-    input_dict = {col: tf.convert_to_tensor(
-        new_table_df[col].to_numpy()) for col in new_table_df.columns}
+#     input_dict = {col: tf.convert_to_tensor(
+#         new_table_df[col].to_numpy()) for col in new_table_df.columns}
 
-    predictions = model.predict(input_dict)
+#     predictions = model.predict(input_dict)
 
-    print(len(predictions))
-    for i in range(len(predictions)):
-        result_item = result_table[i]
-        result_item.append(predictions[i][0] * 100)
-        result_table[i] = result_item
-    result_table = np.array(result_table)
-    result_df = pd.DataFrame(data=result_table)
-    result_df.columns = [ds.USER_COLUMN, ds.PROBABILITY_COLUMN]
-    result_df = result_df.sort_values(
-        by=[ds.PROBABILITY_COLUMN], ascending=False)
-    result_df[ds.PROBABILITY_COLUMN] = result_df[ds.PROBABILITY_COLUMN].astype(
-        str).astype(float)
-    return result_df.to_json(orient="records")
+#     print(len(predictions))
+#     for i in range(len(predictions)):
+#         result_item = result_table[i]
+#         result_item.append(predictions[i][0] * 100)
+#         result_table[i] = result_item
+#     result_table = np.array(result_table)
+#     result_df = pd.DataFrame(data=result_table)
+#     result_df.columns = [ds.USER_COLUMN, ds.PROBABILITY_COLUMN]
+#     result_df = result_df.sort_values(
+#         by=[ds.PROBABILITY_COLUMN], ascending=False)
+#     result_df[ds.PROBABILITY_COLUMN] = result_df[ds.PROBABILITY_COLUMN].astype(
+#         str).astype(float)
+#     return result_df.to_json(orient="records")
 
 
 if __name__ == "__main__":

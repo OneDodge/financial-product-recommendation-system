@@ -5,7 +5,7 @@ nn:
   pre-processing:
     customer:
       file:
-        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_stock.txt
+        input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/masked_cust_hldg_ut.csv
     product:
       file:
         input: /Users/frankngai/Desktop/workspace/financial-product-recommendation-system/src/main/resources/products.csv

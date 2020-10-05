@@ -6,44 +6,29 @@ import numpy as np
 # custom class
 from config import Config
 
-# Pre-Processing File Columns
-USER_COLUMN = 'customer'
+CUSTOMER_COLUMN = 'customer'
 AGE_COLUMN = 'age'
 GENDER_COLUMN = 'gender'
 MARITAL_STATUS_COLUMN = 'marital'
 EDUCATION_LEVEL_COLUMN = 'edu_level'
 NUMBER_OF_CHILD_COLUMN = 'num_of_child'
 RISK_LEVEL_COLUMN = 'risk_level'
-TOTAL_TCR_COLUMN = 'total_tcr'
+TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN = 'total_tcr'
 SALARY_COLUMN = 'salary'
+NCR_INDICATOR_COLUMN = 'ncr_indicator'
+
 SECURITY_CODE_COLUMN = 'security_code'
-SYMBOL_COLUMN = 'symbol'
-NAME_COLUMN = 'name'
-PRICE_COLUMN = 'price'
-CHANGE_COLUMN = 'change'
-CHANGE_PERCENTAGE_COLUMN = 'change_percentage'
-MARKET_CAPTIAL_COLUMN = 'market_captial'
-TRAILING_P_E_COLUMN = 'trailing_p_e'
-REVENUE_COLUMN = 'revenue'
-VOLUME_COLUMN = 'volume'
-TOTAL_CASH_COLUMN = 'total_cash'
-TOTAL_DEBT_COLUMN = 'total_debt'
-FIVE_YEAR_AVERAGE_DIVIDEND_YIELD = '5_year_average_dividend_yield'
-SECTOR_COLUMN = 'sector'
-INDUSTRY_COLUMN = 'industry'
+SUB_TYPE_CODE_COLUMN = 'sub_type_code'
+SECURITY_RISK_LEVEL_COLUMN = 'security_risk_level'
+PRICE_CCY_COLUMN = 'price_ccy'
+ASSET_CLASS_COLUMN = 'asset_class'
 
 USER_INDEX_COLUMN = 'customer_index'
 PRODUCT_INDEX_COLUMN = 'product_index'
 
-IN_HEADERS = [USER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, EDUCATION_LEVEL_COLUMN, NUMBER_OF_CHILD_COLUMN,
-              RISK_LEVEL_COLUMN, TOTAL_TCR_COLUMN, SALARY_COLUMN, SECURITY_CODE_COLUMN, SYMBOL_COLUMN, NAME_COLUMN, PRICE_COLUMN, CHANGE_COLUMN,
-              CHANGE_PERCENTAGE_COLUMN, MARKET_CAPTIAL_COLUMN,
-              #   TRAILING_P_E_COLUMN,
-              #   REVENUE_COLUMN,
-              VOLUME_COLUMN,
-              #   TOTAL_CASH_COLUMN,
-              #   TOTAL_DEBT_COLUMN,
-              FIVE_YEAR_AVERAGE_DIVIDEND_YIELD, SECTOR_COLUMN, INDUSTRY_COLUMN]
+IN_HEADERS = [CUSTOMER_COLUMN, AGE_COLUMN, GENDER_COLUMN, MARITAL_STATUS_COLUMN, EDUCATION_LEVEL_COLUMN, NUMBER_OF_CHILD_COLUMN,
+              RISK_LEVEL_COLUMN, TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN, SALARY_COLUMN, NCR_INDICATOR_COLUMN, SECURITY_CODE_COLUMN, SUB_TYPE_CODE_COLUMN,
+              SECURITY_RISK_LEVEL_COLUMN, PRICE_CCY_COLUMN, ASSET_CLASS_COLUMN]
 
 PROBABILITY_COLUMN = 'probability (%)'
 
@@ -53,30 +38,21 @@ in_df = pd.read_csv(Config.getNNProcessingFileInput(),
                     names=IN_HEADERS,
                     header=0,
                     dtype={
-    USER_COLUMN: 'str',
+    CUSTOMER_COLUMN: 'str',
     AGE_COLUMN: np.int32,
     GENDER_COLUMN: 'str',
     MARITAL_STATUS_COLUMN: 'str',
     EDUCATION_LEVEL_COLUMN: 'str',
     NUMBER_OF_CHILD_COLUMN: np.int32,
     RISK_LEVEL_COLUMN: np.int32,
-    TOTAL_TCR_COLUMN: np.float64,
+    TOTAL_TOTAL_CAPTIAL_RATIO_COLUMN: np.float64,
     SALARY_COLUMN: np.float64,
+    NCR_INDICATOR_COLUMN: 'str',
     SECURITY_CODE_COLUMN: 'str',
-    SYMBOL_COLUMN: 'str',
-    NAME_COLUMN: 'str',
-    PRICE_COLUMN: np.float64,
-    CHANGE_COLUMN: np.float64,
-    CHANGE_PERCENTAGE_COLUMN: np.float64,
-    MARKET_CAPTIAL_COLUMN: np.float64,
-    # TRAILING_P_E_COLUMN: np.float64,
-    # REVENUE_COLUMN: np.float64,
-    VOLUME_COLUMN: np.float64,
-    # TOTAL_CASH_COLUMN: np.float64,
-    # TOTAL_DEBT_COLUMN: np.float64,
-    FIVE_YEAR_AVERAGE_DIVIDEND_YIELD: np.float64,
-    SECTOR_COLUMN: 'str',
-    INDUSTRY_COLUMN: 'str'
+    SUB_TYPE_CODE_COLUMN: 'str',
+    SECURITY_RISK_LEVEL_COLUMN: np.int32,
+    PRICE_CCY_COLUMN: 'str',
+    ASSET_CLASS_COLUMN: 'str'
 })
 
 
