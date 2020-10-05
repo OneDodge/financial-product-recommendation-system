@@ -148,6 +148,8 @@ def productRecommendationApi():
     result_df.columns = [ds.SYMBOL_COLUMN, ds.PROBABILITY_COLUMN]
     result_df = result_df.sort_values(
         by=[ds.PROBABILITY_COLUMN], ascending=False)
+    result_df[ds.PROBABILITY_COLUMN] = result_df[ds.PROBABILITY_COLUMN].astype(
+        str).astype(float)
     return result_df.to_json(orient="records")
 
 
@@ -288,6 +290,8 @@ def userRecommendationApi():
     result_df.columns = [ds.USER_COLUMN, ds.PROBABILITY_COLUMN]
     result_df = result_df.sort_values(
         by=[ds.PROBABILITY_COLUMN], ascending=False)
+    result_df[ds.PROBABILITY_COLUMN] = result_df[ds.PROBABILITY_COLUMN].astype(
+        str).astype(float)
     return result_df.to_json(orient="records")
 
 
