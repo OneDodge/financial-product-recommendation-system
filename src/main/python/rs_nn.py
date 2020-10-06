@@ -306,6 +306,7 @@ def main():
               batch_size=batch_size, epochs=epochs, verbose=verbose, shuffle=True, callbacks=[cp_callback])
 
     loss, accuracy = model.evaluate(test_ds)
+    print("Accuracy", accuracy)
 
     truth = df[TARGET].to_numpy().tolist()
     # print(truth)
@@ -326,7 +327,6 @@ def main():
                                   weights=None, dtype=tf.dtypes.int32, name=None)
     print(cm)
 
-    print("Accuracy", accuracy)
     model.save(Config.getNNModel())
 
 
