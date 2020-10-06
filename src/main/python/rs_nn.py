@@ -323,8 +323,9 @@ def main():
     flatten_predictions_list = list(map(
         lambda x: 1 if x > 0.5 else 0, list(chain.from_iterable(predictions))))
 
-    cm = tf.math.confusion_matrix(truth, predictions, num_classes=None,
-                                  weights=None, dtype=tf.dtypes.int32, name=None)
+    print(truth)
+    print(flatten_predictions_list)
+    cm = tf.math.confusion_matrix(truth, flatten_predictions_list)
     print(cm)
 
     model.save(Config.getNNModel())
