@@ -25,6 +25,7 @@ import os
 from config import Config
 import rs_ds as ds
 from rs_ds import DataStore
+from itertools import chain
 
 FLAGS = flags.FLAGS
 
@@ -114,7 +115,7 @@ def main():
 
     # hyperparameters
     verbose = 1
-    epochs = 40
+    epochs = 4
     batch_size = 256
     latent_dim = 64
     dense_layers = [512, 256, 128, 64, 32, 16, 8]
@@ -305,6 +306,25 @@ def main():
               batch_size=batch_size, epochs=epochs, verbose=verbose, shuffle=True, callbacks=[cp_callback])
 
     loss, accuracy = model.evaluate(test_ds)
+
+    truth = df[TARGET].to_numpy().tolist()
+    # print(truth)
+
+    predictions_df = df
+    predictions_df = predictions_df.drop(columns=[TARGET])
+
+    input_dict = {col: tf.convert_to_tensor(
+        predictions_df[col].to_numpy()) for col in predictions_df.columns}
+
+    # print(predictions_df)
+    predictions = model.predict(input_dict)
+
+    flatten_predictions_list = list(map(
+        lambda x: 1 if x > 0.5 else 0, list(chain.from_iterable(predictions))))
+
+    cm = tf.math.confusion_matrix(truth, predictions, num_classes=None,
+                                  weights=None, dtype=tf.dtypes.int32, name=None)
+    print(cm)
 
     print("Accuracy", accuracy)
     model.save(Config.getNNModel())
